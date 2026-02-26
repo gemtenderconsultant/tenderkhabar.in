@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 header('Content-Type: application/json');
 set_time_limit(0);
 ini_set('post_max_size','2000M');
@@ -164,6 +167,7 @@ if (!$stmt->execute()) {
     echo json_encode(["status"=>"error","message"=>$stmt->error]);
     exit;
 }
+
 
 $dbh1->commit();
 
