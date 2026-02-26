@@ -11,7 +11,9 @@ do {
     $response = json_decode($response_json, true);
 
     if (!$response || $response['count'] == 0) {
+        
         echo "✅ Transfer Completed\n";
+        echo "Source Count: " . $response['count'] . "\n";
         break;
     }
 
@@ -30,8 +32,9 @@ do {
     if ($insert_response === false) {
         echo "❌ CURL ERROR: " . curl_error($ch) . "\n";
         exit;
-    }
-
+    }else{
+    echo "Insert Response: " . $insert_response . "\n";
+}
     curl_close($ch);
 
     $last_row = end($response['data']);
@@ -96,4 +99,4 @@ do {
 
 // } while (true);
 
-echo "Transfer completed";
+echo "Transfer completed\n";;
