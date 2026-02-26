@@ -23,7 +23,7 @@ do {
 
     curl_exec($ch);
     curl_close($ch);
-die;
+    
     $last_row = end($response['data']);
     $last_id  = $last_row['ourrefno'];
 
