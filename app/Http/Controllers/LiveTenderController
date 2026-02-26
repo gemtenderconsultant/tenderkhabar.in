@@ -1,0 +1,127 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
+class LiveTenderController extends Controller
+{
+    /**
+     * Fetch Live Tenders with dynamic filters
+     */
+    public function index(Request $request)
+    {
+        /* 1. API Security Check */
+        if ($request->header('X-API-KEY') !== '123456') {
+            return response()->json(['status' => false, 'message' => 'Unauthorized'], 401);
+        }
+
+        /* 2. Configuration & Inputs */
+        $perPage = $request->input('per_page', 15);
+        $today = Carbon::now()->format('Y-m-d');
+
+        /* 3. Base Query */
+        $query = DB::table('live_tenders as t')
+            ->select(
+                't.ourrefno',
+                't.Work',
+                't.submitdate',
+                't.tenderamount',
+                't.earnestamount',
+                't.doccost',
+                't.city',
+                't.org_name as agency_name',
+                't.state_name',
+                DB::raw("DATE_FORMAT(t.submitdate,'%d-%m-%Y') as formatted_date")
+            )
+            // Only show tenders that haven't expired
+            ->whereDate('t.submitdate', '>=', $today)
+            // Exclude specific link as per your previous logic
+            ->where('t.link2', '!=', 'https://www.nationaltenders_manually.com');
+
+        /* 4. Dynamic Filters */
+
+        // Search by Keyword (Work title)
+        $query->when($request->keyword, function ($q, $keyword) {
+            return $q->where('t.Work', 'LIKE', "%{$keyword}%");
+        });
+
+        // Filter by State ID
+        $query->when($request->state_id, function ($q, $stateId) {
+            return $q->where('t.stateid', $stateId);
+        });
+
+        // Filter by Agency ID
+        $query->when($request->agency_id, function ($q, $agencyId) {
+            return $q->where('t.agencyid', $agencyId);
+        });
+
+        // Filter by City
+        $query->when($request->city, function ($q, $city) {
+            return $q->where('t.city', 'LIKE', "%{$city}%");
+        });
+
+        // Filter by Category (Requires Join)
+        if ($request->category_id || $request->subcategory_id) {
+            $query->join('livetendercategory as tc', 't.ourrefno', '=', 'tc.ourrefno');
+            
+            $query->when($request->category_id, function ($q, $catId) {
+                return $q->where('tc.categoryid', $catId);
+            });
+
+            $query->when($request->subcategory_id, function ($q, $subId) {
+                return $q->where('tc.subcategory', $subId);
+            });
+        }
+
+        // Filter by Amount Range
+        $query->when($request->min_amount, function ($q, $min) {
+            return $q->where('t.tenderamount', '>=', $min);
+        });
+        $query->when($request->max_amount, function ($q, $max) {
+            return $q->where('t.tenderamount', '<=', $max);
+        });
+
+        /* 5. Sorting and Execution */
+        $tenders = $query
+            ->orderBy('t.submitdate', 'asc') // Show soonest deadlines first
+            ->paginate($perPage);
+
+        /* 6. Return Response */
+        return response()->json([
+            'status' => true,
+            'message' => 'Live tenders fetched successfully',
+            'current_date' => $today,
+            'total_count' => $tenders->total(),
+            'data' => $tenders->items(),
+            'pagination' => [
+                'current_page' => $tenders->currentPage(),
+                'last_page' => $tenders->lastPage(),
+                'per_page' => $tenders->perPage(),
+                'next_page_url' => $tenders->nextPageUrl(),
+                'prev_page_url' => $tenders->previousPageUrl(),
+            ]
+        ], 200);
+    }
+
+    /**
+     * Get details for a single tender
+     */
+    public function show($refNo, Request $request)
+    {
+        if ($request->header('X-API-KEY') !== '123456') {
+            return response()->json(['status' => false, 'message' => 'Unauthorized'], 401);
+        }
+
+        $tender = DB::table('live_tenders')->where('ourrefno', $refNo)->first();
+
+        if (!$tender) {
+            return response()->json(['status' => false, 'message' => 'Tender not found'], 404);
+        }
+
+        return response()->json(['status' => true, 'data' => $tender]);
+    }
+}
