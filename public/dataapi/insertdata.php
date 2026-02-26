@@ -29,6 +29,12 @@ if (!function_exists('custom_real_escape_string')) {
     }
 }
 
+$input = json_decode(file_get_contents("php://input"), true);
+
+if (empty($input['data'])) {
+    echo json_encode(["status"=>"error","message"=>"No data received"]);
+    exit;
+}
 // $conn->begin_transaction();
 
 try {
@@ -50,9 +56,7 @@ try {
     )
     ON DUPLICATE KEY UPDATE ourrefno = ourrefno
     ";
-echo "<pre>";print_r($sql);
     $stmt = $dbh1->prepare($sql);
-echo "<pre>";print_r($stmt);die;
     foreach ($input['data'] as $row) {
         $stmt->bind_param(
             "issssdddssississississssss",
