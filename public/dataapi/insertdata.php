@@ -36,7 +36,7 @@ if (empty($input['data'])) {
     exit;
 }
 // $conn->begin_transaction();
-
+$dbh1->begin_transaction();
 try {
 
     $sql = "
@@ -57,6 +57,10 @@ try {
     ON DUPLICATE KEY UPDATE ourrefno = ourrefno
     ";
     $stmt = $dbh1->prepare($sql);
+    if (!$stmt) {
+        echo json_encode(["status"=>"error","message"=>$dbh1->error]);
+        exit;
+    }
     foreach ($input['data'] as $row) {
         $stmt->bind_param(
             "issssdddssississississssss",
@@ -92,13 +96,13 @@ try {
         $stmt->execute();
     }
 
-    $dbh1->commit();
+    $stmt->commit();
     echo json_encode(["status"=>"success","inserted"=>count($input['data'])]);
 
 } catch (Exception $e) {
-    $dbh1->rollback();
+    $stmt->rollback();
     echo json_encode(["status"=>"error","message"=>$e->getMessage()]);
 }
 
 $stmt->close();
-$dbh1->close();
+$stmt->close();
