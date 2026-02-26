@@ -50,9 +50,9 @@ try {
     )
     ON DUPLICATE KEY UPDATE ourrefno = ourrefno
     ";
-
+echo "<pre>";print_r($sql);
     $stmt = $dbh1->prepare($sql);
-
+echo "<pre>";print_r($stmt);die;
     foreach ($input['data'] as $row) {
         $stmt->bind_param(
             "issssdddssississississssss",

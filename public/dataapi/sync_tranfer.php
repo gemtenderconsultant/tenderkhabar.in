@@ -12,7 +12,7 @@ do {
     }
 
     $payload = json_encode(["data" => $response['data']]);
-echo "<pre>";print_r($payload);die;
+
     $ch = curl_init("https://tenderkhabar.in/dataapi/insertdata.php");
     curl_setopt_array($ch, [
         CURLOPT_POST => true,
@@ -23,7 +23,7 @@ echo "<pre>";print_r($payload);die;
 
     curl_exec($ch);
     curl_close($ch);
-
+die;
     $last_row = end($response['data']);
     $last_id  = $last_row['ourrefno'];
 
