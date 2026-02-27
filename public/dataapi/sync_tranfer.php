@@ -38,7 +38,7 @@ do {
     curl_close($ch);
 
     $last_row = end($response['data']);
-    $last_id  = $last_row['ID'];
+    $last_id  = $last_row['id'];
 
     echo "Inserted till ID: ".$last_id."\n";
 
