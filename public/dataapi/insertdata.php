@@ -102,7 +102,7 @@ $values[] = "(" .
 $sql = "INSERT INTO tendercategory_2017 (
 ID, ourrefno, categoryid, subcategory, created_date) VALUES 
  " . implode(",", $values) . "
-ON DUPLICATE KEY UPDATE ourrefno=ourrefno";
+ON DUPLICATE KEY UPDATE ID=ID";
 if (!mysqli_query($dbh1, $sql)) {
     $dbh1->rollback();
     echo json_encode(["status"=>"error","message"=>mysqli_error($dbh1)]);
