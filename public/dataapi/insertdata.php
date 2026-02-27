@@ -80,13 +80,20 @@ foreach ($data as $row) {
 //     "'" . mysqli_real_escape_string($dbh1,$row['form_of_contract']) . "'," .
 //     "'" . mysqli_real_escape_string($dbh1,$row['item']) . "'" .
 // ")";
-$values[] = "(" .
-    (int)$row['ID'] . "," .
-    "'" . (int)$row['ourrefno'] . "'," .
-    "'" . (int)$row['categoryid'] . "'," .
-    "'" . (int)$row['subcategory'] . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['created_date']) . "'" .   
-    ")";
+    // $values[] = "(" .
+    //     (int)$row['ID'] . "," .
+    //     "'" . (int)$row['ourrefno'] . "'," .
+    //     "'" . (int)$row['categoryid'] . "'," .
+    //     "'" . (int)$row['subcategory'] . "'," .
+    //     "'" . mysqli_real_escape_string($dbh1,$row['created_date']) . "'" .   
+    //     ")";
+    $values[] = "(" .
+        (int)$row['id'] . "," .
+        "'" . (int)$row['ourrefno'] . "'," .
+        "'" . mysqli_real_escape_string($dbh1,$row['documentpath']) . "'," .
+        "'" . (int)$row['flag'] . "'," .
+        "'" . mysqli_real_escape_string($dbh1,$row['created_date']) . "'" .   
+        ")";
 }
 /*tenderinfo_2017*/
 // $sql = "INSERT INTO tenderinfo_2017 (
@@ -99,10 +106,16 @@ $values[] = "(" .
 // ) VALUES " . implode(",", $values) . "
 // ON DUPLICATE KEY UPDATE ourrefno=ourrefno";
 
-$sql = "INSERT INTO tendercategory_2017 (
-ID, ourrefno, categoryid, subcategory, created_date) VALUES 
+// $sql = "INSERT INTO tendercategory_2017 (
+// ID, ourrefno, categoryid, subcategory, created_date) VALUES 
+//  " . implode(",", $values) . "
+// ON DUPLICATE KEY UPDATE ID=ID";
+
+$sql = "INSERT INTO tender_doc (
+id, ourrefno, documentpath, flag, date) VALUES 
  " . implode(",", $values) . "
-ON DUPLICATE KEY UPDATE ID=ID";
+ON DUPLICATE KEY UPDATE id=id";
+
 if (!mysqli_query($dbh1, $sql)) {
     $dbh1->rollback();
     echo json_encode(["status"=>"error","message"=>mysqli_error($dbh1)]);
