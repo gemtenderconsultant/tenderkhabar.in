@@ -38,10 +38,10 @@ do {
     curl_close($ch);
 
     $last_row = end($response['data']);
-    $last_id  = $last_row['ourrefno'];
+    $last_id  = $last_row['ID'];
 
     echo "Inserted till ID: ".$last_id."\n";
 
 } while (true);
 
-echo "Transfer completed\n";;
+echo "Transfer completed\n";
