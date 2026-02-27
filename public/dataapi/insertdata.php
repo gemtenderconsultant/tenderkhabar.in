@@ -92,7 +92,7 @@ foreach ($data as $row) {
         "'" . (int)$row['ourrefno'] . "'," .
         "'" . mysqli_real_escape_string($dbh1,$row['documentpath']) . "'," .
         "'" . (int)$row['flag'] . "'," .
-        "'" . mysqli_real_escape_string($dbh1,$row['created_date']) . "'" .   
+        "'" . mysqli_real_escape_string($dbh1,$row['date']) . "'" .   
         ")";
 }
 /*tenderinfo_2017*/
