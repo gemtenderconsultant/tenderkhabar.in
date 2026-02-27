@@ -82,9 +82,9 @@ foreach ($data as $row) {
 // ")";
 $values[] = "(" .
     (int)$row['ID'] . "," .
-    "'" . int($row['ourrefno']) . "'," .
-    "'" . int($row['categoryid']) . "'," .
-    "'" . int($row['subcategory']) . "'," .
+    "'" . (int)$row['ourrefno'] . "'," .
+    "'" . (int)$row['categoryid'] . "'," .
+    "'" . (int)$row['subcategory'] . "'," .
     "'" . mysqli_real_escape_string($dbh1,$row['created_date']) . "'" .   
     ")";
 }
