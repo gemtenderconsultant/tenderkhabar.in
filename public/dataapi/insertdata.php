@@ -50,78 +50,59 @@ $dbh1->begin_transaction();
 $values = [];
 
 foreach ($data as $row) {
-
-
-//     $values[] = "(" .
-//         (int)$row['ourrefno'] . "," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['TenderNo']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['purfromdate']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['submitdate']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['opendate']) . "'," .
-//         (float)$row['tenderamount'] . "," .
-//         (float)$row['earnestamount'] . "," .
-//         (float)$row['doccost'] . "," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['org_name']) . "'," .
-//         (int)$row['agencyid'] . "," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['address']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['city']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['pincode']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['Work']) . "'," .
-//         (int)$row['countryid'] . "," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['state_name']) . "'," .
-//         (int)$row['stateid'] . "," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['dt']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['documentpath']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['tender_ref_id']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['link2']) . "'," .
-//         (int)$row['is_corro'] . "," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['tender_catgeory2']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['tender_catgeory1']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['link']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['form_of_contract']) . "'," .
-//         "'" . mysqli_real_escape_string($dbh1,$row['item']) . "'" .
-//     ")";
-// }
+/*tenderinfo_2017*/
+// $values[] = "(" .
+//     (int)$row['ourrefno'] . "," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['TenderNo']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['purfromdate']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['submitdate']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['opendate']) . "'," .
+//     (float)$row['tenderamount'] . "," .
+//     (float)$row['earnestamount'] . "," .
+//     (float)$row['doccost'] . "," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['org_name']) . "'," .
+//     (int)$row['agencyid'] . "," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['address']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['city']) . "'," .
+//     (int)$row['pincode'] . "," .   // ✅ FIXED (removed quotes)
+//     "'" . mysqli_real_escape_string($dbh1,$row['Work']) . "'," .
+//     (int)$row['countryid'] . "," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['state_name']) . "'," .
+//     (int)$row['stateid'] . "," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['dt']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['documentpath']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['tender_ref_id']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['link2']) . "'," .
+//     (int)$row['is_corro'] . "," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['tender_catgeory2']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['tender_catgeory1']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['link']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['form_of_contract']) . "'," .
+//     "'" . mysqli_real_escape_string($dbh1,$row['item']) . "'" .
+// ")";
 $values[] = "(" .
-    (int)$row['ourrefno'] . "," .
-    "'" . mysqli_real_escape_string($dbh1,$row['TenderNo']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['purfromdate']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['submitdate']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['opendate']) . "'," .
-    (float)$row['tenderamount'] . "," .
-    (float)$row['earnestamount'] . "," .
-    (float)$row['doccost'] . "," .
-    "'" . mysqli_real_escape_string($dbh1,$row['org_name']) . "'," .
-    (int)$row['agencyid'] . "," .
-    "'" . mysqli_real_escape_string($dbh1,$row['address']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['city']) . "'," .
-    (int)$row['pincode'] . "," .   // ✅ FIXED (removed quotes)
-    "'" . mysqli_real_escape_string($dbh1,$row['Work']) . "'," .
-    (int)$row['countryid'] . "," .
-    "'" . mysqli_real_escape_string($dbh1,$row['state_name']) . "'," .
-    (int)$row['stateid'] . "," .
-    "'" . mysqli_real_escape_string($dbh1,$row['dt']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['documentpath']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['tender_ref_id']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['link2']) . "'," .
-    (int)$row['is_corro'] . "," .
-    "'" . mysqli_real_escape_string($dbh1,$row['tender_catgeory2']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['tender_catgeory1']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['link']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['form_of_contract']) . "'," .
-    "'" . mysqli_real_escape_string($dbh1,$row['item']) . "'" .
-")";
+    (int)$row['ID'] . "," .
+    "'" . int($row['ourrefno']) . "'," .
+    "'" . int($row['categoryid']) . "'," .
+    "'" . int($row['subcategory']) . "'," .
+    "'" . mysqli_real_escape_string($dbh1,$row['created_date']) . "'" .   
+    ")";
 }
-$sql = "INSERT INTO tenderinfo_2017 (
-    ourrefno, TenderNo, purfromdate, submitdate, opendate,
-    tenderamount, earnestamount, doccost, org_name, agencyid,
-    address, city, pincode, Work, countryid, state_name,
-    stateid, dt, documentpath, tender_ref_id, link2,
-    is_corro, tender_catgeory2, tender_catgeory1,
-    link, form_of_contract, item
-) VALUES " . implode(",", $values) . "
-ON DUPLICATE KEY UPDATE ourrefno=ourrefno";
+/*tenderinfo_2017*/
+// $sql = "INSERT INTO tenderinfo_2017 (
+//     ourrefno, TenderNo, purfromdate, submitdate, opendate,
+//     tenderamount, earnestamount, doccost, org_name, agencyid,
+//     address, city, pincode, Work, countryid, state_name,
+//     stateid, dt, documentpath, tender_ref_id, link2,
+//     is_corro, tender_catgeory2, tender_catgeory1,
+//     link, form_of_contract, item
+// ) VALUES " . implode(",", $values) . "
+// ON DUPLICATE KEY UPDATE ourrefno=ourrefno";
 
+$sql = "INSERT INTO tendercategory_2017 (
+ID, ourrefno, categoryid, subcategory, created_date) VALUES 
+ " . implode(",", $values) . "
+ON DUPLICATE KEY UPDATE ourrefno=ourrefno";
 if (!mysqli_query($dbh1, $sql)) {
     $dbh1->rollback();
     echo json_encode(["status"=>"error","message"=>mysqli_error($dbh1)]);
