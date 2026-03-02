@@ -744,24 +744,24 @@ class UserProduct extends Authenticatable
         }
         
             if(isset($userproduct['data']) && $userproduct['data'] == 'favourite'){
-            if (Auth::check()) {
-                //Moneyformat(t.tenderamount) 
-                $sqlrecord = "SELECT t.TenderNo,t.ourrefno,t.purfromdate,t.Work,t.submitdate,t.earnestamount,t.doccost,t.tenderamount,Moneyformat(t.tenderamount) as ti_amount,DATE_FORMAT(t.submitdate, '%a %D %b, %Y') as show_ti_submit_date,t.city,t.org_name as agencyname,t.stateid,t.documentpath,t.state_name as name,tc.categoryid,tc.ourrefno,tc.subcategory,'India' as country,tl.user_id,tl.tender_id from $table_name as t
-                        INNER JOIN $cate_table_name as tc ON t.ourrefno = tc.ourrefno
-                        LEFT JOIN category as ct ON ct.id=tc.categoryid 
-                        LEFT JOIN industry as ti ON ti.id=ct.industry_id 
-                        LEFT JOIN tenderlike as tl ON tl.tender_id = t.ourrefno where t.ourrefno = tc.ourrefno  AND tl.user_id=" . $user_id;
-                        //  LEFT JOIN $table_items as lti ON t.ourrefno=lti.ourrefno
-                $sqltotal = "SELECT COUNT(*) as total from $table_name as t
-                        INNER JOIN $cate_table_name as tc ON t.ourrefno = tc.ourrefno
-                        LEFT JOIN category as ct ON ct.id=tc.categoryid 
-                        LEFT JOIN industry as ti ON ti.id=ct.industry_id 
-                        LEFT JOIN tenderlike as tl ON tl.tender_id = t.ourrefno where t.ourrefno = tc.ourrefno  AND tl.user_id=" . $user_id;
-                        //LEFT JOIN $table_items as lti ON t.ourrefno=lti.ourrefno
+                if (Auth::check()) {
+                    //Moneyformat(t.tenderamount) 
+                    $sqlrecord = "SELECT t.TenderNo,t.ourrefno,t.purfromdate,t.Work,t.submitdate,t.earnestamount,t.doccost,t.tenderamount,Moneyformat(t.tenderamount) as ti_amount,DATE_FORMAT(t.submitdate, '%a %D %b, %Y') as show_ti_submit_date,t.city,t.org_name as agencyname,t.stateid,t.documentpath,t.state_name as name,tc.categoryid,tc.ourrefno,tc.subcategory,'India' as country,tl.user_id,tl.tender_id from $table_name as t
+                            INNER JOIN $cate_table_name as tc ON t.ourrefno = tc.ourrefno
+                            LEFT JOIN category as ct ON ct.id=tc.categoryid 
+                            LEFT JOIN industry as ti ON ti.id=ct.industry_id 
+                            LEFT JOIN tenderlike as tl ON tl.tender_id = t.ourrefno where t.ourrefno = tc.ourrefno  AND tl.user_id=" . $user_id;
+                            //  LEFT JOIN $table_items as lti ON t.ourrefno=lti.ourrefno
+                    $sqltotal = "SELECT COUNT(*) as total from $table_name as t
+                            INNER JOIN $cate_table_name as tc ON t.ourrefno = tc.ourrefno
+                            LEFT JOIN category as ct ON ct.id=tc.categoryid 
+                            LEFT JOIN industry as ti ON ti.id=ct.industry_id 
+                            LEFT JOIN tenderlike as tl ON tl.tender_id = t.ourrefno where t.ourrefno = tc.ourrefno  AND tl.user_id=" . $user_id;
+                            //LEFT JOIN $table_items as lti ON t.ourrefno=lti.ourrefno
+                        
+                }else{
                     
-            }else{
-                
-            }             
+                }             
             }else{
                 
                 if ((isset($userproduct['input_s_product']) && $userproduct['input_s_product'] == "") && (isset($userproduct['input_s_category']) && $userproduct['input_s_category'] == "") && (isset($userproduct['input_s_subcategory']) && $userproduct['input_s_subcategory'] == "") && (isset($userproduct['input_s_eproduct']) && $userproduct['input_s_eproduct'] == "") && (isset($userproduct['input_s_ecategory']) && $userproduct['input_s_ecategory'] == "") && (isset($userproduct['input_s_esubcategory']) && $userproduct['input_s_esubcategory'] == "") && (isset($userproduct['input_s_keyword']) && $userproduct['input_s_keyword'] != ""))  {
@@ -1096,8 +1096,8 @@ class UserProduct extends Authenticatable
             
             $sqltot = $sqltotal;
             $sqltot .= $sql;
-             echo"<pre>";
-        echo $sqltot."".$sql;die();
+        //      echo"<pre>";
+        // echo $sqltot."".$sql;die();
             if($type == "dashboard"){
             $sqltotaldashboard .= $sql;
             }

@@ -640,9 +640,9 @@ foreach ($paid_user_tender as $u_key => $u_val) {
     $sql1 = $sql;
     $sql .= " AND t.dt > '" . $my_paid_mail_date . "' AND t.submitdate >= '" . date('Y-m-d') . "' group by t.ourrefno ORDER BY t.ourrefno ASC LIMIT 1000"; //t.state_name
     $sql1 .= " AND t.dt > '" . $my_paid_mail_date . "' AND t.submitdate >= '" . date('Y-m-d') . "' group by t.ourrefno limit 0,1000";
- echo $sql;
- echo "<pre>";
- echo $sql1;
+//  echo $sql;
+//  echo "<pre>";
+//  echo $sql1;
     $my_fresh_tender = mysqli_query($dbh1,$sql); // gautish
    
     if ($my_fresh_tender === false) {
