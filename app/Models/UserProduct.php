@@ -1201,8 +1201,8 @@ class UserProduct extends Authenticatable
             } else {
                 $sql .= " order by t.ourrefno desc";
             }
-        
-        
+        echo $sql;
+        echo $sqltotaldashboard;die();
         
         $total_count = 0;
         $livecount = 0;

@@ -14,13 +14,10 @@ use PHPMailer\PHPMailer\Exception;
 function email_phpmailer($emailid = array(), $subject, $body,$username,$password,$from,$fromname,$host){
     $mail = new PHPMailer;
     //Enable SMTP debugging.
-    $mail->SMTPDebug = 0;                           
-    //Set PHPMailer to use SMTP.
-    $mail->isSMTP();        
-    //Set SMTP host name                      
-    $mail->Host = $host;
-    //Set this to true if SMTP host requires authentication to send email
-    $mail->SMTPAuth = true;                      
+    $mail->SMTPDebug = 0;  //Enable SMTP debugging.                         
+    $mail->isSMTP(); //Set PHPMailer to use SMTP.              
+    $mail->Host = $host;//Set SMTP host name  
+    $mail->SMTPAuth = true;  //Set this to true if SMTP host requires authentication to send email                    
     //Provide username and password
     $mail->Username = $username;             
     $mail->Password = $password;            
@@ -42,11 +39,9 @@ function email_phpmailer($emailid = array(), $subject, $body,$username,$password
         }
     }
     $mail->AddCC('tenderkhabar2@gmail.com'); // change
-    //$mail->addCustomHeader('X-Custom-ID', uniqid());
     $mail->isHTML(true);
     $mail->Subject = $subject;
     $mail->Body = $body;
-    //$mail->AltBody = "This is the plain text version of the email content";
     if(!$mail->send())
     {
     $result = "Mailer Error: " . $mail->ErrorInfo;
@@ -643,7 +638,9 @@ foreach ($paid_user_tender as $u_key => $u_val) {
     $sql1 = $sql;
     $sql .= " AND t.dt > '" . $my_paid_mail_date . "' AND t.submitdate >= '" . date('Y-m-d') . "' group by t.ourrefno ORDER BY t.ourrefno ASC LIMIT 1000"; //t.state_name
     $sql1 .= " AND t.dt > '" . $my_paid_mail_date . "' AND t.submitdate >= '" . date('Y-m-d') . "' group by t.ourrefno limit 0,1000";
-//  echo $sql;die();
+ echo $sql;
+ echo $sql1;
+ die();
     $my_fresh_tender = mysqli_query($dbh1,$sql); // gautish
    
     if ($my_fresh_tender === false) {
@@ -925,6 +922,9 @@ $body .=' </tbody>
 </center>';  
 
 }
+echo "$body";
+print_r($body);
+die();
     $email_recipients[] = $u_val['email'];
 
     //$mail->AddAddress($u_val['email'], $u_val['user_first_name']);
