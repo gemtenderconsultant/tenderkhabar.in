@@ -133,7 +133,7 @@ $finish_email_to = 'nishap.gemtenderconsultant@gmail.com';
 
 if(date('w') != 0){
 $subject_date = date('Y-m-d');
-//echo $subject_date;die();
+echo $subject_date;
 $is_send = false;
 $delhi_ncr = array('Bhiwani', 'Faridabad', 'Gurgaon', 'Jhajjar', 'Mahendragarh', 'Panipat', 'Rewari', 'Rohtak', 'Sonipat', 'Mewat', 'Palwal', 'Jind', 'Karnal', 'Baghpat', 'Bulandshahr', 'Gautam Buddha Nagar', 'Ghaziabad', 'Muzaffarnagar', 'Meerut', 'Hapur', 'Alwar', 'Bharatpur', 'Noida', 'Delhi', 'New Delhi', 'SHAKURBASTI', 'TUGLAKABAD', 'Sakurbasit', 'Adarsh Nagar', 'Badli', 'Brar Square', 'Bijwasan', 'Chanakyapuri', 'Shivaji Bridge', 'Azadpur', 'Dayabasti', 'Delhi Cantt', 'Delhi Sarai Rohilla', 'Delhi KishanGanj', 'Old Delhi', 'Indrapuri', 'Shahdara', 'Sadar Bazar', 'Delhi Safdarjung', 'Ghevra', 'Holambi Kalan', 'Khera Kalan', 'Lodi Colony', 'Lajpat Nagar', 'Mangolpuri', 'Mundka', 'Naya Azadpur', 'Nangloi', 'Naraina Vihar', 'Narela', 'Delhi Hazrat Nizamuddin', 'Okhla', 'Pragati Maidan', 'Palam', 'Patel Nagar', 'Rajlu Garhi', 'Sardar Patel Road', 'Sandal Kalan', 'Shahabad Mohamadpur', 'Sarojini Nagar', 'Sewa Nagar', 'Delhi Sabzi Mandi', 'Tilak Bridge', 'Vivek Vihar', 'Vivekanand Puri Halt');
 
@@ -154,7 +154,8 @@ if(mysqli_num_rows($query_tender_sent) > 0){
 $paid_user_tender = array();
 
 $sql1 = 'SELECT user.id as u_id,user.email,user.alt_email,user.status,user.name,user.company_name,userproduct.* from users as user LEFT JOIN userproduct on user.id=userproduct.user_id  where user.is_tender=1 and userproduct.todate>="' . $dates . '" and user.status="Paid" AND user.id NOT IN(SELECT user_id FROM userinfo WHERE userinfo.tender_date="' . $dates . '") group by user.id order by user.id asc';
-// echo $sql1;die();
+echo $sql1;
+//die();
 $my_users = mysqli_query($dbh2,$sql1);
 
 if (mysqli_num_rows($my_users) > 0) {
@@ -169,7 +170,7 @@ while ($m = mysqli_fetch_assoc($my_users)) {
    
 }
 
- //"<pre>";print_r($paid_user_tender);
+ echo"<pre>";print_r($paid_user_tender);
 //die();
 $sub_category = array();
 $user_state = array();
@@ -183,7 +184,8 @@ foreach ($paid_user_tender as $u_key => $u_val) {
         break;
     }
     
-    //print_r($u_val);die();
+    print_r($u_val);
+    // die();
     $uname = '';
     $company_name = '';
     $uname = $u_val['name'];
@@ -922,9 +924,7 @@ $body .=' </tbody>
 </center>';  
 
 }
-echo "$body";
-print_r($body);
-die();
+
     $email_recipients[] = $u_val['email'];
 
     //$mail->AddAddress($u_val['email'], $u_val['user_first_name']);
