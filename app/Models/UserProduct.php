@@ -592,7 +592,7 @@ class UserProduct extends Authenticatable
         }else{
             $userproduct = $_POST;
         }
-         echo "<pre>";print_r($_POST);
+        //  echo "<pre>";print_r($_POST);
         //  die();
         $flag = 0;
         $page = '';
