@@ -1180,7 +1180,7 @@ class UserProduct extends Authenticatable
                     $sql .= " AND t.link2 not in ('https://bidplus.gem.gov.in','https://bidplus.gem.gov.in/bunch','https://bidplus.gem.gov.in/custom','https://bidplus.gem.gov.in/sbunch','https://bidplus.gem.gov.in/service')";
                 }
             }
-            echo $sql;die();
+            echo $sql;
             $sqltot = $sqltotal;
             $sqltot .= $sql;
             if($type == "dashboard"){
@@ -1202,7 +1202,7 @@ class UserProduct extends Authenticatable
             } else {
                 $sql .= " order by t.ourrefno desc";
             }
-        
+        echo $sqltotaldashboard;die();
         $total_count = 0;
         $livecount = 0;
         if (!empty($sql)) {
