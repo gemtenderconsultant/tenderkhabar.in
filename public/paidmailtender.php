@@ -133,7 +133,7 @@ $finish_email_to = 'nishap.gemtenderconsultant@gmail.com';
 
 if(date('w') != 0){
 $subject_date = date('Y-m-d');
-echo $subject_date;
+// echo $subject_date;
 $is_send = false;
 $delhi_ncr = array('Bhiwani', 'Faridabad', 'Gurgaon', 'Jhajjar', 'Mahendragarh', 'Panipat', 'Rewari', 'Rohtak', 'Sonipat', 'Mewat', 'Palwal', 'Jind', 'Karnal', 'Baghpat', 'Bulandshahr', 'Gautam Buddha Nagar', 'Ghaziabad', 'Muzaffarnagar', 'Meerut', 'Hapur', 'Alwar', 'Bharatpur', 'Noida', 'Delhi', 'New Delhi', 'SHAKURBASTI', 'TUGLAKABAD', 'Sakurbasit', 'Adarsh Nagar', 'Badli', 'Brar Square', 'Bijwasan', 'Chanakyapuri', 'Shivaji Bridge', 'Azadpur', 'Dayabasti', 'Delhi Cantt', 'Delhi Sarai Rohilla', 'Delhi KishanGanj', 'Old Delhi', 'Indrapuri', 'Shahdara', 'Sadar Bazar', 'Delhi Safdarjung', 'Ghevra', 'Holambi Kalan', 'Khera Kalan', 'Lodi Colony', 'Lajpat Nagar', 'Mangolpuri', 'Mundka', 'Naya Azadpur', 'Nangloi', 'Naraina Vihar', 'Narela', 'Delhi Hazrat Nizamuddin', 'Okhla', 'Pragati Maidan', 'Palam', 'Patel Nagar', 'Rajlu Garhi', 'Sardar Patel Road', 'Sandal Kalan', 'Shahabad Mohamadpur', 'Sarojini Nagar', 'Sewa Nagar', 'Delhi Sabzi Mandi', 'Tilak Bridge', 'Vivek Vihar', 'Vivekanand Puri Halt');
 
@@ -643,7 +643,6 @@ foreach ($paid_user_tender as $u_key => $u_val) {
  echo $sql;
  echo "<pre>";
  echo $sql1;
- die();
     $my_fresh_tender = mysqli_query($dbh1,$sql); // gautish
    
     if ($my_fresh_tender === false) {
