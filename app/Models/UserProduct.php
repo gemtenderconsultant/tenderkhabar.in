@@ -592,7 +592,8 @@ class UserProduct extends Authenticatable
         }else{
             $userproduct = $_POST;
         }
-         //echo "<pre>";print_r($_POST);die();
+         echo "<pre>";print_r($_POST);
+        //  die();
         $flag = 0;
         $page = '';
         $per_page = 10;
@@ -602,25 +603,20 @@ class UserProduct extends Authenticatable
         } else {
             $page1 = 0;
         }
-        // $search_type = '';
-        // $search_type = $_POST['search_type'];
+        
         $filter_search = '';
         $keyword_search = '';
         
         if(Auth::check()){
             
-         
         }else{  // not set login session 
-         
-             
+           
         }
         
         $cdate = date('Y-m-d');
         $max_dt = date('Y-m-d', strtotime('-1 day', strtotime($cdate)));
         
         if(isset($userproduct['data']) && $userproduct['data'] == 'fresh'){
-        // $sql_fresh_d = "SELECT MAX(dt) as max_date from live_tenders";
-        // $max_dt = $max_fresh_dt['0']['max_date'];
             $table_name = 'live_tenders';
             $cate_table_name = 'livetendercategory';
             $table_items = "live_tenderinfo_items";
@@ -678,8 +674,6 @@ class UserProduct extends Authenticatable
                 if (Auth::check()) {
                     
                 }else{
-                     
-                    //$searc_session = preg_replace('/[^a-z A-Z 0-9]/', ' ', $userproduct['input_s_keyword']);
                     $searc_session = $userproduct['input_s_keyword'];
                     $str2 = str_replace(', ', ',', $searc_session);
                     $str_3 = rtrim($str2, ',');
@@ -691,13 +685,7 @@ class UserProduct extends Authenticatable
                     }
                     $l_k_array = '"' . implode('","', $filterkeyarray) . '"';
                     
-                    /*$sub_id = DB::table('keyword')
-                    ->select('keyword.subcategory', DB::raw('CASE WHEN search_exclude_subcategory.subcat IS NULL THEN "No" ELSE "Yes" END AS search'))
-                    ->leftJoin('search_exclude_subcategory', 'keyword.subcategory', '=', 'search_exclude_subcategory.subcat')
-                    ->whereIn('keyword.name', $searchKeyword)
-                    ->get();*/
                     $checksubcategorysql = "SELECT keyword.name,keyword.subcategory,CASE WHEN search_exclude_subcategory.subcat IS NULL THEN 'No' ELSE 'Yes' END AS search FROM `keyword` LEFT JOIN search_exclude_subcategory ON keyword.subcategory=search_exclude_subcategory.subcat WHERE keyword.name IN($l_k_array)";
-                    //echo $checksubcategorysql;die();
                     $matchsubcategory = DB::select($checksubcategorysql);
                     $if_check_cat = "";
                     $match_subid = array();
@@ -773,8 +761,7 @@ class UserProduct extends Authenticatable
                     
             }else{
                 
-            }   
-                        
+            }             
             }else{
                 
                 if ((isset($userproduct['input_s_product']) && $userproduct['input_s_product'] == "") && (isset($userproduct['input_s_category']) && $userproduct['input_s_category'] == "") && (isset($userproduct['input_s_subcategory']) && $userproduct['input_s_subcategory'] == "") && (isset($userproduct['input_s_eproduct']) && $userproduct['input_s_eproduct'] == "") && (isset($userproduct['input_s_ecategory']) && $userproduct['input_s_ecategory'] == "") && (isset($userproduct['input_s_esubcategory']) && $userproduct['input_s_esubcategory'] == "") && (isset($userproduct['input_s_keyword']) && $userproduct['input_s_keyword'] != ""))  {
@@ -824,11 +811,7 @@ class UserProduct extends Authenticatable
             }
             
             $sql .= " AND t.link2 != 'https://www.nationaltenders_manually.com'";
-            
-            //if (!empty($_POST['search_data'])) {
-                //$sql .= " AND t.Work LIKE '%" . $_POST['search_data'] . "%' ";
-            //}
-            
+           
             /********** boq item query start***********/
             if(!empty($checkforboq)){
                 foreach($checkforboq as $kboq => $kvboq){
@@ -881,44 +864,31 @@ class UserProduct extends Authenticatable
                             $str_query = trim($str_query);
                             $str_query = rtrim($str_query,'OR');
                             $str_query = trim($str_query);
-                        
-                        //$sql .=  $str_query;
-                        //$sql .= " ) ";
-                    
+                       
                     }
                    $str_query2 = "";
                    if (!empty($userproduct['input_s_eproduct']) || !empty($userproduct['input_s_ecategory']) || !empty($userproduct['input_s_esubcategory'])) {
-                    //$sql .= " AND ( ";
                         $str_query2 .= "SELECT ilc.ourrefno FROM $cate_table_name as ilc LEFT JOIN category as iec ON ilc.categoryid=iec.id WHERE ";
                         if ($eproduct_ids != "") {
-                            //$str_query2 .= " ti.id NOT IN (" . $eproduct_ids . ") AND";
-                            $str_query2 .= " iec.industry_id IN (" . $eproduct_ids . ") OR"; //AND g
+                           $str_query2 .= " iec.industry_id IN (" . $eproduct_ids . ") OR"; //AND g
                         }
                         if ($ecat_ids != "") {
-                            //$str_query2 .= " tc.categoryid NOT IN (" . $ecat_ids . ") AND";
                             $str_query2 .= " ilc.categoryid IN (" . $ecat_ids . ") OR"; //AND g
                         }
                         if ($esubcat_ids != "") {
-                            //$str_query2 .= " tc.subcategory NOT IN (" . $esubcat_ids . ") AND";
                             $str_query2 .= " ilc.subcategory IN (" . $esubcat_ids . ") OR"; //AND g
                         }
                         $str_query2 = trim($str_query2);
                         $str_query2 = rtrim($str_query2,'OR'); //AND g
                         $str_query2 = trim($str_query2);
-                        
-                        //$sql .=  $str_query2;
-                    //$sql .= " ) ";
+                       
                    }
                      $sql .= " AND ( ";
                         if($str_query != "" && $str_query2 != ""){
                             $sql .=  "(".$str_query.")";
-                            //$sql .=  " AND t.ourrefno NOT IN (".$str_query2.")";
                         }else if($str_query != ""){    
                             $sql .=  "(".$str_query.")";
                         }else if($str_query2 != ""){    
-                            //$sql .=  "(".$str_query2.")";
-                            //$sql .=  " t.ourrefno NOT IN (".$str_query2.")";
-                            
                         }
                         
                         if (isset($userproduct['input_isexactkeyword_values']) && $userproduct['input_isexactkeyword_values'] == 1) {
@@ -972,14 +942,6 @@ class UserProduct extends Authenticatable
               //echo $sql;die();
             } else { // only keywordwise
             
-            
-                /*if ($userproduct['categoryid'] != 0 && $userproduct['categoryid'] != '') {
-                    $sql .= " AND tc.categoryid IN (" . $userproduct['categoryid'] . ")";
-                }
-                if ($userproduct['subcategoryid'] != 0 && $userproduct['subcategoryid'] != '') {
-                    $sql .= " AND tc.subcategory IN (" . $userproduct['subcategoryid'] . ")";
-                }*/
-                
                 if (isset($userproduct['input_isexactkeyword_values']) && $userproduct['input_isexactkeyword_values'] == 1) {
                     
                     if (!empty($userproduct['input_s_keyword']) && $userproduct['input_s_keyword'] != "") {
@@ -1022,8 +984,6 @@ class UserProduct extends Authenticatable
                         
                     }
                 }
-                
-                
             }
             //echo $sql;die();
             
@@ -1086,14 +1046,7 @@ class UserProduct extends Authenticatable
                         }
                     }  
                 }
-                
             }
-
-            /*if (!empty($userproduct['form_of_contract'])) {
-                $my_contract = explode(',', $userproduct['form_of_contract']);
-                $contract = "'" . implode("','", $my_contract) . "'";
-                $sql .= " AND (`t`.`form_of_contract` in ($contract) or `t`.`form_of_contract` ='')";
-            }*/
             
             if (isset($userproduct['input_s_ekeyword']) && $userproduct['input_s_ekeyword'] != '') {
                 $userexcludingkeyword = explode(",", $userproduct['input_s_ekeyword']);
@@ -1112,15 +1065,8 @@ class UserProduct extends Authenticatable
                     }
                 }
             }
-
-            
-
             $state_ncr = array();
             $state_ncr1 = array();
-            /*
-              if ($userproduct['state'] != 0) {
-              $sql .= " AND t.stateid IN (" . $userproduct['state'] . ")";
-              } */
             if (isset($userproduct['input_s_state']) && $userproduct['input_s_state'] != 0 && $userproduct['input_s_state'] != "") {
                 $state_ncr = explode(',', $userproduct['input_s_state']);
                 if (isset($userproduct['input_s_city']) && $userproduct['input_s_city'] == '' && !empty($state_ncr) && in_array('380017', $state_ncr)) {
@@ -1131,46 +1077,13 @@ class UserProduct extends Authenticatable
                     $sql .= " AND t.stateid IN (" . $userproduct['input_s_state'] . ")";
                 }
             }
-            //if(in_array('380017',))
-            //for delhi ncr
-            /*
-              if ($userproduct['city'] != '') {
-              $city_explode = explode(',', $userproduct['city']);
-              $city1 = "'" . implode("','", $city_explode) . "'";
-              $sql .= " AND t.city IN (" . $city1 . ")";
-              }
-             */
-
+            
             if (isset($userproduct['input_s_city']) && $userproduct['input_s_city'] != '') {
                 $city_explode = explode(',', $userproduct['input_s_city']);
-                //check for nearby cities
-                 /*$nearby_city = array();
-                foreach ($city_explode as $k2 => $j2) {
-                    $my_nearby_city = "select cities from nearby_city where cities like '%" . $j2 . "%'";
-                    $command_p = $connection->createCommand($my_nearby_city);
-                    $dataReader_p = $command_p->query();
-                    $nearby_city_list = $dataReader_p->readAll();
-                    if (!empty($nearby_city_list['0']['cities'])) {
-                        $nearby_city[] = $nearby_city_list['0']['cities'];
-                    }
-                }
-
-                if (!empty($nearby_city)) {
-                    $my_implode_city = implode(',', $nearby_city);
-                    $my_explode_city = explode(',', $my_implode_city);
-                    $my_explode_city = array_unique(array_filter($my_explode_city));
-                    $city_explode = array_merge($city_explode, $my_explode_city);
-                }*/
                 $city1 = "'" . implode("','", $city_explode) . "'";
                 $sql .= " AND t.city IN (" . $city1 . ")";
             }
             
-            /*if ($userproduct['websites'] != '') {
-                 $websites_explode = explode(',', $userproduct['websites']);
-                 $websites = "'" . implode("','", $websites_explode) . "'";
-                 $sql .= " AND t.link2 IN (" . $websites . ")";
-            }*/
-           
             if (isset($userproduct['input_portal_search']) && $userproduct['input_portal_search'] != '') {
                 
                 if($userproduct['input_portal_search'] == "GEM")
@@ -1180,9 +1093,11 @@ class UserProduct extends Authenticatable
                     $sql .= " AND t.link2 not in ('https://bidplus.gem.gov.in','https://bidplus.gem.gov.in/bunch','https://bidplus.gem.gov.in/custom','https://bidplus.gem.gov.in/sbunch','https://bidplus.gem.gov.in/service')";
                 }
             }
-            echo $sql;
+            
             $sqltot = $sqltotal;
             $sqltot .= $sql;
+             echo"<pre>";
+        echo $sqltot."".$sql;die();
             if($type == "dashboard"){
             $sqltotaldashboard .= $sql;
             }
@@ -1202,8 +1117,7 @@ class UserProduct extends Authenticatable
             } else {
                 $sql .= " order by t.ourrefno desc";
             }
-            echo"<pre>";
-        echo $sqltotaldashboard;die();
+           
         $total_count = 0;
         $livecount = 0;
         if (!empty($sql)) {

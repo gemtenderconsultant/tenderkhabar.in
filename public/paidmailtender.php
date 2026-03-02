@@ -154,7 +154,7 @@ if(mysqli_num_rows($query_tender_sent) > 0){
 $paid_user_tender = array();
 
 $sql1 = 'SELECT user.id as u_id,user.email,user.alt_email,user.status,user.name,user.company_name,userproduct.* from users as user LEFT JOIN userproduct on user.id=userproduct.user_id  where user.is_tender=1 and userproduct.todate>="' . $dates . '" and user.status="Paid" AND user.id NOT IN(SELECT user_id FROM userinfo WHERE userinfo.tender_date="' . $dates . '") group by user.id order by user.id asc';
-echo $sql1;
+// echo $sql1;
 //die();
 $my_users = mysqli_query($dbh2,$sql1);
 
@@ -170,7 +170,7 @@ while ($m = mysqli_fetch_assoc($my_users)) {
    
 }
 
- echo"<pre>";print_r($paid_user_tender);
+//  echo"<pre>";print_r($paid_user_tender);
 //die();
 $sub_category = array();
 $user_state = array();
@@ -184,7 +184,7 @@ foreach ($paid_user_tender as $u_key => $u_val) {
         break;
     }
     
-    print_r($u_val);
+    // print_r($u_val);
     // die();
     $uname = '';
     $company_name = '';
@@ -641,6 +641,7 @@ foreach ($paid_user_tender as $u_key => $u_val) {
     $sql .= " AND t.dt > '" . $my_paid_mail_date . "' AND t.submitdate >= '" . date('Y-m-d') . "' group by t.ourrefno ORDER BY t.ourrefno ASC LIMIT 1000"; //t.state_name
     $sql1 .= " AND t.dt > '" . $my_paid_mail_date . "' AND t.submitdate >= '" . date('Y-m-d') . "' group by t.ourrefno limit 0,1000";
  echo $sql;
+ echo "<pre>";
  echo $sql1;
  die();
     $my_fresh_tender = mysqli_query($dbh1,$sql); // gautish
