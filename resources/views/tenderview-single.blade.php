@@ -239,7 +239,7 @@ $schemakey = $schematitle." tender, GeM tender, ".$data->state_name." tender, ".
                    @php $url = str_replace('https://document.nationaltenders.in',$documentlink->url,$url); @endphp
                 @endif    
 
-                @php $url = str_replace('document.nationaltenders.in','document.tenderkhabar.in',$url); @endphp
+                @php $url = str_replace('document.nationaltenders.in','document.tenderkhabar.com',$url); @endphp
                 <div class="card p-0 mb-2">
                     <div class="card-body p-0 m-0">    
                         <div class="tab_title p-2">

@@ -169,9 +169,9 @@
           @endif 
           
           @php
-          $url = str_replace('resultdoc.nationaltenders.in','resultdocument.tenderkhabar.in',$url);
+          $url = str_replace('resultdoc.nationaltenders.in','resultdocument.tenderkhabar.com',$url);
 
-          $url2 = str_replace('resultdoc.nationaltenders.in','resultdocument.tenderkhabar.in',$url2);
+          $url2 = str_replace('resultdoc.nationaltenders.in','resultdocument.tenderkhabar.com',$url2);
           @endphp
           <div class="col-12">
             <div class="card p-0 mb-2">
