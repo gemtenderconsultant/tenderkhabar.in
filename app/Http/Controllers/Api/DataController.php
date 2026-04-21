@@ -38,8 +38,10 @@ class DataController extends Controller
 // tender
     public function live_tenders()
     {
-        $data = DB::table('live_tenders')->get();
-
+        $data = DB::table('live_tenders')
+        ->orderBy('id', 'desc') // latest records first
+        ->limit(1000)           // only 1000 records
+        ->get();
         return response()->json([
             'status' => true,
             'data' => $data
@@ -48,7 +50,10 @@ class DataController extends Controller
 
     public function livetendercategory()
     {
-        $data = DB::table('livetendercategory')->get();
+        $data = DB::table('livetendercategory')
+        ->orderBy('id', 'desc') // latest records first
+        ->limit(1000)           // only 1000 records
+        ->get();
 
         return response()->json([
             'status' => true,
@@ -58,7 +63,10 @@ class DataController extends Controller
 
     public function tenderinfo_2017()
     {
-        $data = DB::table('tenderinfo_2017')->get();
+        $data = DB::table('tenderinfo_2017')
+        ->orderBy('id', 'desc') // latest records first
+        ->limit(1000)           // only 1000 records
+        ->get();
 
         return response()->json([
             'status' => true,
@@ -68,7 +76,10 @@ class DataController extends Controller
 
     public function tenderinfo_items()
     {
-        $data = DB::table('tenderinfo_items')->get();
+        $data = DB::table('tenderinfo_items')
+        ->orderBy('id', 'desc') // latest records first
+        ->limit(1000)           // only 1000 records
+        ->get();
 
         return response()->json([
             'status' => true,
@@ -78,7 +89,10 @@ class DataController extends Controller
 // tender result
     public function tender_result_info()
     {
-        $data = DB::table('tender_result_info')->get();
+        $data = DB::table('tender_result_info')
+        ->orderBy('id', 'desc') // latest records first
+        ->limit(1000)           // only 1000 records
+        ->get();
 
         return response()->json([
             'status' => true,
@@ -88,7 +102,10 @@ class DataController extends Controller
     // Customer Plan API
     public function tender_result_category()
     {
-        $data = DB::table('tender_result_category')->get();
+        $data = DB::table('tender_result_category')
+        ->orderBy('id', 'desc') // latest records first
+        ->limit(1000)           // only 1000 records
+        ->get();
 
         return response()->json([
             'status' => true,
