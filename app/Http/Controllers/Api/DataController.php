@@ -39,7 +39,7 @@ class DataController extends Controller
     public function live_tenders()
     {
         $data = DB::table('live_tenders')
-        ->orderBy('id', 'desc') // latest records first
+        ->orderBy('ourrefno', 'desc') // latest records first
         ->limit(1000)           // only 1000 records
         ->get();
         return response()->json([
@@ -51,7 +51,7 @@ class DataController extends Controller
     public function livetendercategory()
     {
         $data = DB::table('livetendercategory')
-        ->orderBy('id', 'desc') // latest records first
+        ->orderBy('ID', 'desc') // latest records first
         ->limit(1000)           // only 1000 records
         ->get();
 
@@ -64,7 +64,7 @@ class DataController extends Controller
     public function tenderinfo_2017()
     {
         $data = DB::table('tenderinfo_2017')
-        ->orderBy('id', 'desc') // latest records first
+        ->orderBy('ourrefno', 'desc') // latest records first
         ->limit(1000)           // only 1000 records
         ->get();
 
@@ -103,7 +103,7 @@ class DataController extends Controller
     public function tender_result_category()
     {
         $data = DB::table('tender_result_category')
-        ->orderBy('id', 'desc') // latest records first
+        ->orderBy('ID', 'desc') // latest records first
         ->limit(1000)           // only 1000 records
         ->get();
 
