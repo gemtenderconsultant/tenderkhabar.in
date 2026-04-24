@@ -40,7 +40,7 @@ class DataController extends Controller
     {
         $data = DB::table('live_tenders')
         ->orderBy('ourrefno', 'desc') // latest records first
-        ->limit(1000)           // only 1000 records
+        ->limit(5)           // only 1000 records
         ->get();
         return response()->json([
             'status' => true,
@@ -52,7 +52,7 @@ class DataController extends Controller
     {
         $data = DB::table('livetendercategory')
         ->orderBy('ID', 'desc') // latest records first
-        ->limit(1000)           // only 1000 records
+        ->limit(5)           // only 1000 records
         ->get();
 
         return response()->json([
@@ -65,7 +65,7 @@ class DataController extends Controller
     {
         $data = DB::table('tenderinfo_2017')
         ->orderBy('ourrefno', 'desc') // latest records first
-        ->limit(1000)           // only 1000 records
+        ->limit(5)           // only 1000 records
         ->get();
 
         return response()->json([
@@ -78,7 +78,7 @@ class DataController extends Controller
     {
         $data = DB::table('tenderinfo_items')
         ->orderBy('id', 'desc') // latest records first
-        ->limit(1000)           // only 1000 records
+        ->limit(5)           // only 1000 records
         ->get();
 
         return response()->json([
@@ -91,7 +91,7 @@ class DataController extends Controller
     {
         $data = DB::table('tender_result_info')
         ->orderBy('id', 'desc') // latest records first
-        ->limit(1000)           // only 1000 records
+        ->limit(5)           // only 1000 records
         ->get();
 
         return response()->json([
@@ -104,7 +104,7 @@ class DataController extends Controller
     {
         $data = DB::table('tender_result_category')
         ->orderBy('ID', 'desc') // latest records first
-        ->limit(1000)           // only 1000 records
+        ->limit(5)           // only 1000 records
         ->get();
 
         return response()->json([
