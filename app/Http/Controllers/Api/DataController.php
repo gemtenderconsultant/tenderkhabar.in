@@ -36,18 +36,74 @@ class DataController extends Controller
         ]);
     }
 // tender
-    public function live_tenders()
-    {
-        $data = DB::table('live_tenders')
-        ->orderBy('ourrefno', 'desc') // latest records first
-        ->limit(5)           // only 1000 records
-        ->get();
-        return response()->json([
-            'status' => true,
-            'data' => $data
-        ]);
-    }
+    // public function live_tenders()
+    // {
+    //     $data = DB::table('live_tenders')
+    //     ->orderBy('ourrefno', 'desc') // latest records first
+    //     ->limit(5)           // only 1000 records
+    //     ->get();
+    //     return response()->json([
+    //         'status' => true,
+    //         'data' => $data
+    //     ]);
+    // }
+// public function live_tenders()
+// {
+//     $zip = DB::table('live_tenders')
+//         ->select('*', DB::raw("'zip' as filetype"))
+//         ->where('documentpath', 'like', '%.zip')
+//         ->orderBy('ourrefno', 'desc')
+//         ->limit(5);
 
+//     $pdf = DB::table('live_tenders')
+//         ->select('*', DB::raw("'pdf' as filetype"))
+//         ->where('documentpath', 'like', '%.pdf')
+//         ->orderBy('ourrefno', 'desc')
+//         ->limit(5);
+
+//     $html = DB::table('live_tenders')
+//         ->select('*', DB::raw("'html' as filetype"))
+//         ->where('documentpath', 'like', '%.html')
+//         ->orderBy('ourrefno', 'desc')
+//         ->limit(5);
+
+//     $data = $zip
+//         ->unionAll($pdf)
+//         ->unionAll($html)
+//         ->get();
+
+//     return response()->json([
+//         'status' => true,
+//         'data' => $data
+//     ]);
+// }
+public function live_tenders()
+{
+    $zip = DB::table('live_tenders')
+        ->where('documentpath', 'REGEXP', '\\.zip($|\\?)')
+        ->orderBy('ourrefno', 'desc')
+        ->limit(5);
+
+    $pdf = DB::table('live_tenders')
+        ->where('documentpath', 'REGEXP', '\\.pdf($|\\?)')
+        ->orderBy('ourrefno', 'desc')
+        ->limit(5);
+
+    $html = DB::table('live_tenders')
+        ->where('documentpath', 'REGEXP', '\\.html($|\\?)')
+        ->orderBy('ourrefno', 'desc')
+        ->limit(5);
+
+    $data = $zip
+        ->unionAll($pdf)
+        ->unionAll($html)
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $data
+    ]);
+}
     public function livetendercategory()
     {
         $data = DB::table('livetendercategory')
