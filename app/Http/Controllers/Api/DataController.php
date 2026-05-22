@@ -82,17 +82,17 @@ public function live_tenders()
     $zip = DB::table('live_tenders')
         ->where('documentpath', 'REGEXP', '\\.zip($|\\?)')
         ->orderBy('ourrefno', 'desc')
-        ->limit(5);
+        ->limit(40);
 
     $pdf = DB::table('live_tenders')
         ->where('documentpath', 'REGEXP', '\\.pdf($|\\?)')
         ->orderBy('ourrefno', 'desc')
-        ->limit(5);
+        ->limit(40);
 
     $html = DB::table('live_tenders')
         ->where('documentpath', 'REGEXP', '\\.html($|\\?)')
         ->orderBy('ourrefno', 'desc')
-        ->limit(5);
+        ->limit(40);
 
     $data = $zip
         ->unionAll($pdf)
