@@ -47,20 +47,34 @@
                         <div class="tender-listing-accordion-body"></div>
                     </div>
                     <div class="tender-listing-checkbox-grid list_login_subcategory_list">
-                         @if(isset($myuserproduct['subcategoryid']) && $myuserproduct['subcategoryid'] != '') @if(count(explode(',',$myuserproduct['subcategoryid'])) > 0) @php $subcategoryname = []; $subcategoryname = explode(',',$myuserproduct['subcategoryidname']); @endphp @foreach(explode(',',$myuserproduct['subcategoryid']) as $key => $row) 
-                         <div class="list_category">
-                        <label class="tender-listing-checkbox-item"><input class="subcategoryid" checked data-title="{{$subcategoryname[$key]}}" type="checkbox" value="{{$row}}" id="sFilters_subcategory_{{$row}}" data="{{$subcategoryname[$key]}}" name="Filters[subcategoryid][]"> {{$subcategoryname[$key]}}</label>
-                        @endforeach @endif @endif @if(isset($type)) @if($type == "subcategory" && $selectedsubcategoryid != "") 
-                        <label class="tender-listing-checkbox-item"><input class="subcategoryid" checked data-title="{{$selectedsubcategoryid}}" type="checkbox" value="{{$selectedsubcategoryid}}" id="sFilters_subcategory_{{$selectedsubcategoryid}}" data="{{$selectedsubcategoryname}}" name="Filters[subcategoryid][]">{{$selectedsubcategoryname}}</label>
-                    </div>
-                    @endif @endif
+                        <div class="list_category">
+                            @if(isset($myuserproduct['subcategoryid']) && $myuserproduct['subcategoryid'] != '') 
+                                @if(count(explode(',',$myuserproduct['subcategoryid'])) > 0) 
+                                @php 
+                                    $subcategoryname = []; 
+                                    $subcategoryname = explode(',',$myuserproduct['subcategoryidname']); 
+                                @endphp 
+                                @foreach(explode(',',$myuserproduct['subcategoryid']) as $key => $row) 
+                                <label class="tender-listing-checkbox-item">
+                                <input class="subcategoryid" checked data-title="{{$subcategoryname[$key]}}" type="checkbox" value="{{$row}}" id="sFilters_subcategory_{{$row}}" data="{{$subcategoryname[$key]}}" name="Filters[subcategoryid][]"> 
+                                {{$subcategoryname[$key]}}</label>
+                                @endforeach 
+                                @endif 
+                            @endif 
+                            @if(isset($type)) 
+                            @if($type == "subcategory" && $selectedsubcategoryid != "") 
+                            <label class="tender-listing-checkbox-item">
+                            <input class="subcategoryid" checked data-title="{{$selectedsubcategoryid}}" type="checkbox" value="{{$selectedsubcategoryid}}" id="sFilters_subcategory_{{$selectedsubcategoryid}}" data="{{$selectedsubcategoryname}}" name="Filters[subcategoryid][]">
+                            {{$selectedsubcategoryname}}</label>
+                            @endif @endif
+                        </div>
                     </div>
                     <div class="tender-listing-panel-footer">
                         <button class="tender-listing-btn-panel tender-listing-btn-reset-panel btn_clear_selected_item btn_for_mobile" data="subcategory">Reset</button>
                         <button class="tender-listing-btn-panel tender-listing-btn-apply sector_apply" data="subcategory">Apply Now</button></div>
                     </div>
-            </div>
-            <div class="tender-listing-filter-item">
+                </div>
+                <div class="tender-listing-filter-item">
                     <div class="tender-listing-filter-trigger" onclick="togglePanel('keyPanel')">Keyword <i data-lucide="chevron-down" size="14"></i></div>
                     <div id="keyPanel" class="tender-listing-filter-panel">
                         <div class="tender-listing-panel-header"><span class="tender-listing-panel-title">Keywords</span><i data-lucide="x" class="tender-listing-panel-close" onclick="closeAll()"></i></div>
