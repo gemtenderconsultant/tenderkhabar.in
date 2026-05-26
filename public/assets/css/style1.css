@@ -1,0 +1,1707 @@
+/* For Login */
+:root {
+            --gold: #D4A017;
+            --gold-dim: rgba(212,160,23,0.1);
+            --navy: #0D1B40;
+            --navy-mid: #162250;
+            --cream: #FDFDFD;
+            --white: #FFFFFF;
+            --border: rgba(13,27,64,0.08);
+            --muted: #7A8BA8;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --success: #10B981;
+            --bg-accent: #F4F7F9;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Manrope', sans-serif; 
+            background: var(--cream); 
+            color: var(--navy); 
+            min-height: 100vh;
+            /* display: flex; */
+            display: block;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .login-mesh-gradient {
+            position: fixed; inset: 0; z-index: -1; background: var(--cream); overflow: hidden;
+        }
+        .login-mesh-gradient::before {
+            content: ''; position: absolute; width: 140%; height: 140%; top: -20%; left: -20%;
+            background-image: 
+                radial-gradient(circle at 15% 25%, rgba(13,27,64, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(212,160,23, 0.04) 0%, transparent 40%);
+            filter: blur(80px);
+        }
+        .login-page{
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 20px 60px rgba(13,27,64,0.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-logo { 
+            font-size: 1.2rem; font-weight: 800; color: var(--navy); 
+            text-decoration: none; display: flex; align-items: center; 
+            justify-content: center; gap: 10px; margin-bottom: 32px;
+        }
+        .login-logo span { color: var(--gold); }
+
+        .login-header { text-align: center; margin-bottom: 32px; }
+        .login-header h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+        .login-header p { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+
+        .login-form-group { margin-bottom: 20px; position: relative; }
+        .login-form-group label { 
+            display: block; font-size: 0.7rem; font-weight: 800; 
+            text-transform: uppercase; letter-spacing: 0.05em; 
+            color: var(--muted); margin-bottom: 8px; 
+        }
+        .login-input-wrapper { position: relative; display: flex; align-items: center; }
+        .login-input-wrapper i { position: absolute; left: 14px; color: var(--muted); pointer-events: none; }
+        
+        .login-input {
+            width: 100%;
+            padding: 14px 14px 14px 44px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: var(--navy);
+            transition: 0.2s;
+            outline: none;
+            background: var(--cream);
+        }
+        .login-input:focus { border-color: var(--gold); background: white; box-shadow: 0 0 0 4px var(--gold-dim); }
+
+        .login-forgot-link { 
+            display: block; text-align: right; font-size: 0.75rem; 
+            font-weight: 700; color: var(--gold); text-decoration: none; margin-top: 8px; 
+        }
+
+        .login-btn-login {
+            width: 100%;
+            padding: 16px;
+            background: var(--navy);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.25s;
+            margin-top: 24px;
+        }
+        .login-btn-login:hover { background: var(--navy-mid); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(13,27,64,0.15); }
+
+        .login-divider { 
+            display: flex; align-items: center; gap: 16px; margin: 32px 0; 
+            font-size: 0.7rem; font-weight: 700; color: #CBD5E1; text-transform: uppercase; 
+        }
+        .login-divider::before, .login-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        .login-social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .login-social-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 12px; border: 1px solid var(--border); border-radius: 12px;
+            background: white; cursor: pointer; transition: 0.2s; font-size: 0.8rem; font-weight: 700;
+            color: inherit; text-decoration: none;
+        }
+        .login-social-btn:hover { background: var(--cream); border-color: var(--gold); }
+
+        .login-footer-text { text-align: center; margin-top: 32px; font-size: 0.85rem; color: var(--muted); }
+        .login-footer-text a { color: var(--gold); text-decoration: none; font-weight: 700; }
+
+        .login-security-badge {
+            position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 0.7rem; font-weight: 700;
+            white-space: nowrap;
+        }
+        @media (max-width: 480px) {
+            body { padding: 16px; align-items: flex-start; } 
+            .login-card { padding: 32px 20px; border-radius: 20px; }
+            .login-header h1 { font-size: 1.3rem; }
+            .login-social-grid { grid-template-columns: 1fr; } 
+            .login-security-badge { position: relative; bottom: auto; left: auto; transform: none; margin-top: 40px; justify-content: center; }
+        }
+
+        /* For Search Details */
+        
+
+        body { font-family: 'Manrope', sans-serif; background: var(--cream); color: var(--navy); line-height: 1.6; }
+
+        .search-details-bg-layer { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(13,27,64, 0.01) 0%, transparent 40%); }
+
+        .search-details-header { background: white; border-bottom: 1px solid var(--border); padding: 16px 40px; position: sticky; top: 0; z-index: 100; }
+        .search-details-nav-inner-search-details { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; }
+        .search-details-logo { font-size: 1rem; font-weight: 800; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .search-details-logo span { color: var(--gold); }
+
+        .search-details-container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+        .search-details-result-hero { background: white; border-bottom: 1px solid var(--border); padding: 40px 0; }
+        .search-details-breadcrumb { display: flex; gap: 8px; font-size: 0.7rem; color: var(--muted); margin-bottom: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; flex-wrap: wrap; }
+        .search-details-breadcrumb a { color: var(--gold); text-decoration: none; }
+        
+        .search-details-status-badge { display: inline-flex; align-items: center; gap: 6px; background: #EBFDF5; color: var(--success); padding: 4px 12px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 16px; border: 1px solid rgba(16,185,129,0.1); }
+        
+        .search-details-detail-title { font-size: 1.6rem; font-weight: 800; line-height: 1.4; color: var(--navy); margin-bottom: 10px; }
+        .search-details-detail-id { font-family: monospace; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+
+        .search-details-layout { display: grid; grid-template-columns: 1fr 360px; gap: 40px; padding: 40px 0; }
+
+        .search-details-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 24px; }
+        .search-details-sec-label { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; color: var(--gold); letter-spacing: 0.12em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .search-details-sec-label::after { content: ''; height: 1px; flex: 1; background: var(--border); }
+
+        .search-details-description-box { font-size: 0.9rem; color: var(--navy-mid); max-height: 300px; overflow-y: auto; padding-right: 15px; text-align: justify; padding-bottom: 10px; }
+        .search-details-description-box::-webkit-scrollbar { width: 4px; }
+        .search-details-description-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        .search-details-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .search-details-info-item { display: flex; flex-direction: column; gap: 4px; }
+        .search-details-info-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+        .search-details-info-val { font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+
+        .search-details-sidebar { position: sticky; top: 100px; height: fit-content; }
+        
+        .search-details-winner-card { background: var(--navy); color: white; border-radius: 20px; padding: 28px; position: relative; overflow: hidden; margin-bottom: 20px; }
+        .search-details-winner-card::before { content: ''; position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(212,160,23,0.2), transparent 70%); }
+        
+        .search-details-winner-tag { font-size: 0.6rem; font-weight: 900; background: var(--gold); color: white; padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 15px; }
+        .search-details-winner-name { font-size: 1.25rem; font-weight: 800; line-height: 1.3; margin-bottom: 15px; color: #fff; }
+        
+        .search-details-award-stat { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px; }
+        .search-details-award-amount { font-size: 1.8rem; font-weight: 800; color: var(--gold); display: block; }
+        .search-details-award-label { font-size: 0.65rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; }
+
+        .search-details-doc-link { display: flex; align-items: center; justify-content: space-between; padding: 12px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--navy); margin-top: 10px; transition: 0.2s; }
+        .search-details-doc-link:hover { border-color: var(--gold); background: var(--gold-dim); }
+        .search-details-doc-name { font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+
+        .search-details-btn-action { width: 100%; padding: 14px; border-radius: 10px; border: none; font-family: inherit; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; transition: 0.25s; text-decoration: none; }
+        .search-details-btn-gold { background: var(--gold); color: white; }
+        .search-details-btn-outline { background: white; border: 1px solid var(--border); color: var(--navy); }
+        .search-details-btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+        @media (max-width: 1024px) {
+            .search-details-layout { grid-template-columns: 1fr; gap: 20px; }
+            .search-details-sidebar { position: static; order: -1; } /* Winner card shows first on mobile */
+            .search-details-container { padding: 0 20px; }
+            .search-details-header { padding: 16px 20px; }
+        }
+
+        @media (max-width: 640px) {
+            .search-details-detail-title { font-size: 1.3rem; }
+            .search-details-info-grid { grid-template-columns: 1fr; gap: 16px; }
+            .search-details-card { padding: 20px; }
+            .search-details-result-hero { padding: 30px 0; }
+            .search-details-nav-inner .search-details-btn-outline { padding: 6px 12px; font-size: 0.7rem; }
+        }
+
+        /* for search tender */
+        
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--cream);
+            color: var(--navy);
+            overflow-x: hidden;
+        }
+
+        .search-tender-bg-layer {
+            position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at 10% 10%, rgba(13,27,64, 0.01) 0%, transparent 40%);
+        }
+
+       .search-tender-header{
+            background: white; border-bottom: 1px solid var(--border);
+            padding: 10px 32px; position: sticky; top: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .search-tender-logo { font-size: 1rem; font-weight: 800; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .search-tender-logo span { color: var(--gold); }
+
+        .search-tender-global-search {
+            flex: 1; max-width: 450px; margin: 0 40px;
+            display: flex; align-items: center; background: var(--bg-accent);
+            border-radius: 8px; padding: 2px 12px; border: 1px solid transparent;
+        }
+        .search-tender-global-search form{
+            display:flex;
+            align-items:center;
+            width:100%;
+        }
+
+        .search-tender-global-search input { border: none; background: transparent; padding: 8px; width: 100%; outline: none; font-family: inherit; font-size: 0.85rem; }
+
+        .search-tender-dashboard {
+            display: grid; grid-template-columns: 280px 1fr;
+            max-width: 1500px; margin: 0 auto;
+        }
+
+        .search-tender-sidebar {
+            border-right: 1px solid var(--border);
+            padding: 14px; height: calc(100vh - 62px);
+            position: sticky; top: 62px; overflow-y: auto;
+            background: white;
+        }
+        .search-tender-filter-section { margin-bottom: 24px; }
+        .search-tender-filter-title { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--navy); margin-bottom: 10px; display: block; }
+
+        .search-tender-select-trigger {
+            width: 100%; padding: 10px; background: white; border: 1px solid var(--border);
+            border-radius: 8px; font-size: 0.8rem; display: flex; justify-content: space-between;
+            align-items: center; cursor: pointer;color: var(--navy);
+        }
+        .search-tender-select-trigger:hover { border: 1px solid var(--gold); }
+        
+        .search-tender-select-dropdown {
+            position: absolute; background: white; border: 1px solid var(--border); border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); z-index: 50; display: none;
+            width: 100%; max-height: 200px; overflow-y: auto; padding: 8px; margin-top: 4px;
+        }
+        .search-tender-select-dropdown.active { display: block; }
+        .search-tender-dropdown-search { width: 100%; padding: 6px; border: 1px solid var(--bg-accent); border-radius: 4px; margin-bottom: 6px; font-size: 0.75rem; outline: none; }
+        .search-tender-option { padding: 8px; font-size: 0.75rem; display: flex; align-items: center; gap: 8px; cursor: pointer; border-radius: 4px; }
+        .search-tender-option:hover { background: var(--bg-accent); }
+
+        .search-tender-feed { padding: 24px 32px; background: #FAFAFA; min-height: 100vh; }
+        .search-tender-feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+        .search-tender-results-count { font-size: 1.1rem; font-weight: 700; }
+        .search-tender-results-count span { color: var(--muted); font-size: 0.8rem; font-weight: 400; }
+
+        .search-tender-tender-row {
+            background: white; border: 1px solid var(--border); border-radius: 12px;
+            padding: 16px 20px; margin-bottom: 12px; display: flex;
+            justify-content: space-between; align-items: flex-start; gap: 24px;
+            transition: 0.2s ease;
+        }
+        .search-tender-tender-row:hover { border-color: var(--gold); box-shadow: 0 8px 20px rgba(13,27,64,0.03); }
+
+        .search-tender-tender-main { flex: 1; }
+        .search-tender-tender-main h3 { font-size: 0.95rem; font-weight: 700; line-height: 1.4; margin: 8px 0; color: var(--navy); }
+        .search-tender-badge { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; background: var(--bg-accent); color: var(--muted); display: inline-block; margin-right: 4px; margin-bottom: 4px;}
+        .search-tender-badge.gold { background: var(--gold-dim); color: var(--gold); }
+        
+        .search-tender-info-strip { display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap; }
+        .search-tender-info-cell { display: flex; flex-direction: column; }
+        .search-tender-cell-label { font-size: 0.6rem; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+        .search-tender-cell-val { font-size: 0.78rem; font-weight: 600; color: var(--navy-mid); }
+
+        .search-tender-tender-actions {  /* width: 180px;  */ width: 112px;text-align: right; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+        .search-tender-val-amount { font-size: 1.15rem; font-weight: 800; color: var(--navy); display: block; }
+        .search-tender-btn-view { 
+            background: var(--navy); color: white; border: none; padding: 8px; border-radius: 6px;
+            font-weight: 700; cursor: pointer; font-size: 0.8rem; width: 100%; transition: 0.2s;
+        text-align: center; text-decoration: none;
+        }
+        .search-tender-btn-view:hover { opacity: 0.9; }
+        .search-tender-icon-btns { display: flex; gap: 6px; justify-content: flex-end; }
+        .search-tender-btn-mini { border: 1px solid var(--border); background: white; padding: 5px; border-radius: 4px; cursor: pointer; color: var(--muted); transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .search-tender-btn-mini:hover { border-color: var(--gold); color: var(--gold); }
+
+        @media (max-width: 1024px) {
+            .search-tender-dashboard { grid-template-columns: 240px 1fr; }
+            .search-tender-global-search { margin: 0 20px; }
+        }
+
+        @media (max-width: 850px) {
+            .search-tender-dashboard { grid-template-columns: 1fr; }
+            .search-tender-sidebar {
+                position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border);
+                display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;
+            }
+            .search-tender-filter-section { flex: 1; min-width: 200px; margin-bottom: 0; }
+            .search-tender-global-search { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            .search-tender-header { padding: 10px 15px; }
+            .search-tender-feed { padding: 20px 15px; }
+            .search-tender-tender-row { flex-direction: column; gap: 15px; }
+            .search-tender-tender-actions { 
+                width: 100%; text-align: left; border-top: 1px solid var(--border); 
+                padding-top: 15px; flex-direction: row; align-items: center; justify-content: space-between;
+            }
+            .search-tender-icon-btns { justify-content: flex-start; }
+            .search-tender-btn-view { width: auto; padding: 8px 20px; }
+        }
+
+        /* for tender details */
+       
+        body { font-family: 'Manrope', sans-serif; background: var(--cream); color: var(--navy); }
+
+        .tender-details-bg-layer { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(13,27,64, 0.01) 0%, transparent 40%); }
+
+        .tender-details-header { background: white; border-bottom: 1px solid var(--border); padding: 16px 40px; position: sticky; top: 0; z-index: 100; }
+        .tender-details-nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; }
+        .tender-details-logo { font-size: 1rem; font-weight: 800; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .tender-details-logo span { color: var(--gold); }
+
+        .tender-details-detail-hero { background: white; border-bottom: 1px solid var(--border); padding: 48px 0; }
+        .tender-details-container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+        
+        .tender-details-breadcrumb { display: flex; gap: 8px; font-size: 0.75rem; color: var(--muted); margin-bottom: 24px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; flex-wrap: wrap; }
+        .tender-details-breadcrumb a { color: var(--gold); text-decoration: none; }
+
+        .tender-details-tender-id-tag { display: inline-block; background: var(--navy); color: white; padding: 4px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; font-family: monospace; margin-bottom: 16px; }
+        .tender-details-detail-title { font-size: 1.8rem; font-weight: 800; line-height: 1.3; margin-bottom: 24px; letter-spacing: -0.02em; }
+
+        .tender-details-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; padding: 48px 0; }
+
+        .tender-details-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 32px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.01); }
+        .tender-details-sec-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; color: var(--gold); letter-spacing: 0.15em; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .tender-details-sec-label::after { content: ''; height: 1px; flex: 1; background: var(--border); }
+
+        .tender-details-description-text { font-size: 1rem; color: var(--navy-mid); line-height: 1.7; font-weight: 500; }
+
+        .tender-details-data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .tender-details-data-box { display: flex; flex-direction: column; gap: 4px; }
+        .tender-details-data-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+        .tender-details-data-val { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+
+        .tender-details-cost-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(13,27,64,0.04); }
+        .tender-details-cost-row:last-child { border-bottom: none; }
+        .tender-details-cost-label { color: var(--muted); font-size: 0.85rem; font-weight: 600; }
+        .tender-details-cost-amount { font-weight: 800; color: var(--navy); font-size: 0.9rem; }
+
+        .tender-details-sidebar { position: sticky; top: 120px; height: fit-content; }
+
+        .tender-details-countdown-card { background: var(--navy); color: white; border-radius: 20px; padding: 32px; text-align: center; margin-bottom: 24px; position: relative; overflow: hidden; }
+        .tender-details-countdown-card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(212,160,23,0.15), transparent 70%); }
+        
+        .tender-details-days-big { font-size: 4rem; font-weight: 800; color: #FF0000; line-height: 1; }
+        .tender-details-days-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.6; margin-bottom: 20px; }
+        
+        .tender-details-closing-date-box { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; }
+
+        .tender-details-doc-list { list-style: none; margin-top: 15px; }
+        .tender-details-doc-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: #F8FAFC; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; text-decoration: none; transition: 0.2s; }
+        .tender-details-doc-item:hover { border-color: var(--gold); background: white; }
+        .tender-details-doc-name { font-size: 0.8rem; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 8px; }
+        .tender-details-doc-item i { color: var(--gold); }
+
+        .tender-details-btn-full { width: 100%; padding: 16px; border-radius: 12px; border: none; font-family: inherit; font-weight: 800; font-size: 0.9rem; cursor: pointer; transition: 0.25s; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
+        .tender-details-btn-primary { background: var(--gold); color: white; }
+        .tender-details-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212,160,23,0.2); }
+        .tender-details-btn-secondary { background: white; border: 1px solid var(--border); color: var(--navy); }
+        .tender-details-btn-secondary:hover { border-color: var(--gold); }
+
+        @media (max-width: 1024px) {
+            .tender-details-header { padding: 16px 24px; }
+            .tender-details-container { padding: 0 24px; }
+            .tender-details-layout { grid-template-columns: 1fr; gap: 32px; padding: 32px 0; }
+            .tender-details-sidebar { position: static; }
+            .tender-details-detail-hero { padding: 32px 0; }
+        }
+
+        @media (max-width: 768px) {
+            .tender-details-detail-title { font-size: 1.5rem; }
+            .tender-details-card { padding: 24px; }
+            .tender-details-data-grid { grid-template-columns: 1fr; gap: 20px; }
+            .tender-details-detail-hero h1 { margin-bottom: 16px; }
+            .tender-details-detail-hero div[style*="display: flex"] { flex-direction: column; gap: 16px !important; }
+        }
+
+        @media (max-width: 480px) {
+            .tender-details-header { padding: 12px 16px; }
+            .tender-details-container { padding: 0 16px; }
+            .tender-details-breadcrumb { font-size: 0.65rem; }
+            .tender-details-detail-title { font-size: 1.3rem; }
+            .tender-details-days-big { font-size: 3rem; }
+            .tender-details-nav-inner .tender-details-btn-secondary { padding: 6px 12px; font-size: 0.7rem; }
+        }
+
+        /* TENDER DETAILS SPECIFIC STYLES */
+
+.tender-details-body {
+    font-family: 'Manrope', sans-serif;
+    background: #F8FAFC;
+    color: var(--navy);
+    margin: 0;
+}
+
+/* Blur for sensitive data */
+.tender-details-blur {
+    filter: blur(5px);
+    user-select: none;
+    opacity: 0.6;
+}
+
+.tender-details-header {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.tender-details-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.tender-details-btn-secondary-top {
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.tender-details-hero {
+    background: white;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+}
+
+.tender-details-hero-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.tender-details-org-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.tender-details-org-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color:var(--navy) !important;
+    margin: 0;
+}
+
+.tender-details-utility-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-left: 15px;
+}
+
+.tender-details-utility-bar i {
+    cursor: pointer;
+    color: #444;
+}
+
+.tender-details-tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.tender-details-tag {
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+.tender-details-location-strip {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tender-details-text-section {
+    max-width: 90%;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #1E293B;
+}
+
+/* Days Left Badge */
+.tender-details-days-badge {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.tender-details-days-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #DC2626; /* Exact Red from image */
+    line-height: 1;
+}
+
+.tender-details-days-text {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+/* 5 Column Metrics Bar */
+.tender-details-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    border-top: 1px solid #F1F5F9;
+    padding-top: 20px;
+}
+
+.tender-details-metric-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+.tender-details-metric-val {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #0F172A;
+}
+
+.tender-details-font-bold {
+    font-weight: 900;
+}
+
+/* Table Style Cards */
+.tender-details-card-flat {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.tender-details-card-header {
+    background: #F1F5F9;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #334155;
+    border-bottom: 1px solid var(--border);
+}
+
+.tender-details-overview-grid, .tender-details-docs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #E2E8F0; /* Grid line color */
+    gap: 1px;
+}
+
+.tender-details-grid-item, .tender-details-doc-row {
+    background: white;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.tender-details-grid-item span, .tender-details-doc-row span {
+    color: #64748B;
+}
+
+.tender-details-grid-item strong {
+    color: #0F172A;
+}
+
+.tender-details-grid-item a, .tender-details-doc-row a {
+    color: #000;
+    font-weight: 800;
+    text-decoration: none;
+    border-bottom: 1px solid #000;
+}
+
+.tender-details-footer-action {
+    padding: 15px 20px;
+}
+
+.tender-details-link-bold {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1.5px solid #000;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .tender-details-metrics-row {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tender-details-hero-flex {
+        flex-direction: column;
+    }
+    .tender-details-days-badge {
+        text-align: left;
+        padding-left: 0;
+        margin-top: 20px;
+    }
+    .tender-details-overview-grid, .tender-details-docs-grid {
+        grid-template-columns: 1fr;
+    }
+    .tender-details-metrics-row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+        /* for tender listing */
+       
+        body { font-family: 'Manrope', sans-serif; background: var(--cream); color: var(--navy); line-height: 1.6; }
+
+        .tender-listing-bg-layer { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(13,27,64, 0.01) 0%, transparent 40%); }
+
+        .tender-listing-header { background: white; border-bottom: 1px solid var(--border); padding: 0 40px; position: sticky; top: 0; z-index: 2000; height: 72px; display: flex; align-items: center; }
+        .tender-listing-header-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1440px; margin: 0 auto; }
+        .tender-listing-logo { font-size: 1.1rem; font-weight: 800; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .tender-listing-logo span { color: var(--gold); }
+        
+        .tender-listing-nav { display: flex; gap: 32px; }
+        .tender-listing-nav a { text-decoration: none; color: var(--navy); font-size: 0.85rem; font-weight: 600; opacity: 0.6; transition: 0.2s; }
+        .tender-listing-nav a.tender-listing-active { opacity: 1; color: var(--gold); }
+        .tender-listing-user-profile { display: flex; align-items: center; }
+        .tender-listing-avatar { width: 36px; height: 36px; background: var(--navy); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
+
+        .tender-listing-sticky-filters {
+            position: sticky; top: 72px; z-index: 1000;
+            background: white; border-bottom: 1px solid var(--border);
+            padding: 12px 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .tender-listing-filter-ribbon { display: flex; align-items: center; gap: 10px; max-width: 1440px; margin: 0 auto; flex-wrap: wrap; }
+        
+        .tender-listing-filter-item { position: relative; }
+        .tender-listing-filter-trigger {
+            background: white; border: 1px solid var(--border); border-radius: 8px;
+            padding: 8px 14px; font-size: 0.75rem; font-weight: 700; color: var(--navy-mid);
+            cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s;
+            white-space: nowrap;
+        }
+        .tender-listing-filter-trigger:hover, .tender-listing-filter-trigger.tender-listing-active { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
+        .tender-listing-btn-reset-top { background: #FEF2F2; color: #EF4444; border: 1px solid #FEE2E2; }
+
+        .tender-listing-filter-panel {
+            position: absolute; top: calc(100% + 10px); left: 0; 
+            background: white; border: 1px solid var(--border); border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 450px; z-index: 100;
+            display: none; padding: 20px;
+        }
+        .tender-listing-filter-panel.tender-listing-active { display: block; animation: tenderListingSlideUp 0.2s var(--ease); }
+        @keyframes tenderListingSlideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .tender-listing-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .tender-listing-panel-title { font-size: 0.85rem; font-weight: 800; color: var(--navy); }
+        .tender-listing-panel-close { cursor: pointer; color: var(--muted); }
+
+        .tender-listing-panel-search { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 15px; outline: none; font-size: 0.8rem; }
+        .tender-listing-checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-height: 200px; overflow-y: auto; padding-right: 5px; }
+        .tender-listing-checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; cursor: pointer; color: var(--navy-mid); }
+        .tender-listing-checkbox-item input { accent-color: var(--gold); }
+
+        .tender-listing-panel-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border); }
+        .tender-listing-btn-panel { padding: 8px 16px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; border: none; }
+        .tender-listing-btn-apply { background: #007bff; color: white; }
+        .tender-listing-btn-reset-panel { background: white; border: 1px solid var(--border); color: var(--muted); }
+
+        .tender-listing-amount-row { display: flex; gap: 15px; }
+        .tender-listing-amount-input-group { flex: 1; }
+        .tender-listing-amount-input-group label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--muted); margin-bottom: 5px; }
+        .tender-listing-input-with-icon { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; padding: 0 10px; background: var(--cream); }
+        .tender-listing-input-with-icon input { border: none; background: transparent; padding: 10px; width: 100%; font-size: 0.8rem; outline: none; }
+        
+        .tender-listing-more-filters-form { display: flex; flex-direction: column; gap: 12px; }
+        .tender-listing-form-row { border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
+        .tender-listing-form-row label { display: block; font-size: 0.65rem; font-weight: 800; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+        .tender-listing-form-row input { width: 100%; border: none; font-size: 0.8rem; outline: none; background: transparent; }
+
+        .tender-listing-toolbar { background: var(--navy); padding: 12px 40px; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .tender-listing-status-switches { display: flex; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 3px; }
+        .tender-listing-switch { padding: 6px 16px; font-size: 0.7rem; font-weight: 800; border-radius: 6px; cursor: pointer; }
+        .tender-listing-switch.tender-listing-active { background: var(--gold); color: white; }
+
+        .tender-listing-content-area { max-width: 1440px; margin: 0 auto; padding: 32px 40px; }
+        .tender-listing-tender-card {
+            background: white; border: 1px solid var(--border); border-radius: 12px;
+            padding: 16px 24px; margin-bottom: 12px; display: flex;
+            justify-content: space-between; align-items: center; transition: 0.2s;
+        }
+        .tender-listing-tender-card:hover { border-color: var(--gold); box-shadow: 0 8px 24px rgba(13,27,64,0.04); }
+        .tender-listing-card-info { flex: 1; }
+        .tender-listing-card-meta { display: flex; gap: 15px; font-size: 0.65rem; font-weight: 800; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+        .tender-listing-card-meta span { color: var(--gold); }
+        .tender-listing-card-title { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.4; }
+        .tender-listing-card-details { display: flex; gap: 20px; font-size: 0.75rem; color: var(--muted); }
+        .tender-listing-card-details strong { color: var(--navy-mid); }
+        
+        .tender-listing-card-actions { text-align: right; width: 220px; }
+        .tender-listing-days-left { font-size: 0.7rem; font-weight: 800; color: #EF4444; margin-bottom: 10px; display: block; }
+        .tender-listing-btn-group { display: flex; gap: 8px; justify-content: flex-end; }
+        .tender-listing-btn-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; color: var(--navy); }
+        .tender-listing-btn-icon:hover { border-color: var(--gold); color: var(--gold); }
+
+        @media (max-width: 1024px) {
+            .tender-listing-header, .tender-listing-sticky-filters, .tender-listing-toolbar, .tender-listing-content-area {
+                padding: 10px 20px;
+            }
+            .tender-listing-filter-panel { width: 400px; }
+            .tender-listing-nav { gap: 15px; }
+            .tender-listing-nav a { font-size: 0.75rem; }
+        }
+
+        @media (max-width: 768px) {
+            .tender-listing-nav { display: none; } 
+            
+            .tender-listing-sticky-filters {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .tender-listing-filter-ribbon {
+                flex-wrap: nowrap;
+                padding-bottom: 5px;
+            }
+            
+            .tender-listing-filter-panel {
+                position: fixed;
+                top: auto;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                border-radius: 20px 20px 0 0;
+                padding: 25px 20px;
+            }
+
+            .tender-listing-tender-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .tender-listing-card-actions {
+                width: 100%;
+                text-align: left;
+                border-top: 1px solid var(--border);
+                padding-top: 12px;
+            }
+
+            .tender-listing-btn-group {
+                justify-content: flex-start;
+            }
+
+            .tender-listing-checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tender-listing-amount-row {
+                flex-direction: column;
+            }
+
+            .tender-listing-toolbar {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tender-listing-card-details {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .tender-listing-header-inner {
+                justify-content: center;
+            }
+            .tender-listing-user-profile {
+                position: absolute;
+                right: 20px;
+            }
+        }
+
+        /* for search result */
+       
+
+        body { font-family: 'Manrope', sans-serif; background: var(--cream); color: var(--navy); overflow-x: hidden; }
+
+        .search-result-bg-layer { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(13,27,64, 0.01) 0%, transparent 40%); }
+
+        .search-result-header {
+            background: white; border-bottom: 1px solid var(--border);
+            padding: 10px 32px; position: sticky; top: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .search-result-logo { font-size: 1rem; font-weight: 800; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .search-result-logo span { color: var(--gold); }
+
+        .search-result-global-search {
+            flex: 1; max-width: 450px; margin: 0 40px;
+            display: flex; align-items: center; background: var(--bg-accent);
+            border-radius: 8px; padding: 2px 12px; border: 1px solid transparent;
+        }
+        .search-result-global-search form {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .search-result-global-search input { border: none; background: transparent; padding: 8px; width: 100%; outline: none; font-family: inherit; font-size: 0.85rem; }
+
+        .search-result-dashboard { display: grid; grid-template-columns: 280px 1fr; max-width: 1500px; margin: 0 auto; }
+
+        .search-result-sidebar {
+            border-right: 1px solid var(--border);
+            padding: 24px; height: calc(100vh - 62px);
+            position: sticky; top: 62px; overflow-y: auto;
+            background: var(--cream);
+        }
+        .search-result-filter-section { margin-bottom: 24px; }
+        .search-result-filter-title { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--navy); margin-bottom: 10px; display: block; }
+
+        .search-result-select-wrapper { position: relative; margin-bottom: 8px; }
+        .search-result-select-trigger {
+            width: 100%; padding: 10px; background: white; border: 1px solid var(--border);
+            border-radius: 8px; font-size: 0.78rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;color: var(--navy);
+        }
+        .search-result-select-trigger:hover { border-color: var(--gold); }
+        .search-result-select-dropdown {
+            position: absolute; background: white; border: 1px solid var(--border); border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08); z-index: 100; display: none;
+            width: 100%; max-height: 200px; overflow-y: auto; padding: 8px; margin-top: 4px;
+        }
+        .search-result-select-dropdown.active { display: block; }
+        .search-result-dropdown-search { width: 100%; padding: 6px; border: 1px solid var(--bg-accent); border-radius: 6px; margin-bottom: 6px; font-size: 0.75rem; outline: none; }
+        .search-result-option { padding: 8px; font-size: 0.75rem; display: flex; align-items: center; gap: 8px; cursor: pointer; border-radius: 4px; }
+        .search-result-option:hover { background: var(--bg-accent); color: var(--gold); }
+
+        .search-result-feed { padding: 24px 32px; background: #FAFAFA; min-height: 100vh; }
+        .search-result-feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .search-result-results-count { font-size: 1.1rem; font-weight: 700; }
+        .search-result-results-count span { color: var(--muted); font-size: 0.8rem; font-weight: 400; display: block; }
+
+        .search-result-header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+        .search-result-top-filter-btn {
+            background: white; border: 1px solid var(--border); padding: 8px 12px;
+            border-radius: 8px; font-size: 0.75rem; font-weight: 700; color: var(--navy);
+            display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s;
+        }
+        .search-result-top-filter-btn:hover { border-color: var(--gold); }
+
+        .search-result-result-row {
+            background: white; border: 1px solid var(--border); border-radius: 12px;
+            padding: 22px 20px; margin-bottom: 12px; display: flex;
+            justify-content: space-between; align-items: center; gap: 24px;
+            transition: 0.2s ease; position: relative; overflow: hidden;
+        }
+        .search-result-result-row:hover { border-color: var(--gold); box-shadow: 0 8px 20px rgba(13,27,64,0.03); }
+        .search-result-result-row::before {
+            content: 'AWARDED'; position: absolute; left: 0; top: 5px;
+            background: var(--success); color: white; font-size: 0.5rem; font-weight: 900;
+            padding: 2px 6px; border-radius: 0 4px 4px 0; letter-spacing: 0.05em;
+        }
+
+        .search-result-tender-info { flex: 1; padding-left: 15px; }
+        .search-result-tender-id { font-size: 0.92rem; color: var(--muted); font-weight: 700; font-family: monospace; }
+        .search-result-tender-title { font-size: 0.9rem; font-weight: 700; line-height: 1.4; margin: 4px 0 10px 0; color: var(--navy); }
+        
+        .search-result-winner-stripe {
+            background: var(--bg-accent); padding: 6px 12px; border-radius: 6px;
+            display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(16, 185, 129, 0.05);
+        }
+        .search-result-winner-name { font-size: 0.75rem; font-weight: 700; color: var(--navy-mid); }
+        .search-result-winner-label { font-size: 0.55rem; text-transform: uppercase; color: var(--success); font-weight: 800; }
+
+        .search-result-meta-strip { display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap; }
+        .search-result-meta-cell { display: flex; flex-direction: column; }
+        .search-result-m-label { font-size: 0.75rem; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+        .search-result-m-val { font-size: 0.72rem; font-weight: 600; color: var(--navy-mid); }
+
+        .search-result-result-side { width: 180px; text-align: right; flex-shrink: 0; }
+        .search-result-award-amount { font-size: 1.15rem; font-weight: 800; color: var(--success); display: block; }
+        .search-result-aoc-date { font-size: 0.65rem; color: var(--muted); font-weight: 600; }
+        
+        .search-result-btn-mini { border: 1px solid var(--border); background: white; padding: 6px; border-radius: 6px; cursor: pointer; color: var(--muted); margin-top: 10px; transition: 0.2s; }
+        .search-result-btn-mini:hover { border-color: var(--gold); color: var(--gold); }
+        .search-result-btn-export { background: var(--navy); color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+        @media (max-width: 1024px) {
+            .search-result-dashboard { grid-template-columns: 240px 1fr; }
+            .search-result-global-search { margin: 0 20px; }
+            .search-result-feed { padding: 20px; }
+        }
+
+        @media (max-width: 850px) {
+            .search-result-dashboard { grid-template-columns: 1fr; }
+            
+            .search-result-sidebar { 
+                position: static; 
+                height: auto; 
+                border-right: none; 
+                border-bottom: 1px solid var(--border); 
+                padding: 15px 20px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .search-result-filter-section { margin-bottom: 0; flex: 1; min-width: 200px; }
+            
+            .search-result-global-search { display: none; }
+            
+            .search-result-header { padding: 10px 20px; }
+        }
+
+        @media (max-width: 600px) {
+            .search-result-result-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .search-result-result-side {
+                width: 100%;
+                text-align: left;
+                border-top: 1px solid var(--border);
+                padding-top: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .search-result-btn-mini { margin-top: 0; }
+            
+            .search-result-feed-header { flex-direction: column; align-items: flex-start; }
+            
+            .search-result-header-actions { width: 100%; justify-content: space-between; }
+            
+            .search-result-top-filter-btn { flex: 1; justify-content: center; }
+
+            .search-result-results-count { font-size: 1rem; }
+        }
+
+        .sw-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .sw-header .search-result-filter-title {
+            color: #444;
+            margin-bottom: 0;
+        }
+
+        .sw-content {
+            display: none;
+            padding-left: 5px;
+        }
+
+        .sw-content.active {
+            display: block;
+        }
+
+        .sw-input {
+            width: 100%;
+            padding: 10px;
+            border: 1.5px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            outline: none;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        .sw-input:focus {
+            border-color: var(--gold);
+        }
+
+        .sw-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: #555;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+        .sw-checkbox-label input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .sw-apply-btn {
+            background-color: #94b3c7;
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .sw-apply-btn:hover {
+            background-color: #7a9bad;
+        }
+
+        @media (max-width: 850px) {
+            .search-result-filter-section {
+                min-width: 260px; 
+                flex: 1;
+            }
+            
+            .sw-content {
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-result-filter-section {
+                min-width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .sw-input {
+                padding: 12px;
+                font-size: 1rem;
+            }
+
+            .sw-apply-btn {
+                width: 100%;
+                padding: 12px;
+                margin-top: 5px;
+            }
+
+            .sw-checkbox-label {
+                padding: 8px 0; 
+            }
+        }
+
+
+        /* for result details */
+      
+
+        body { font-family: 'Manrope', sans-serif; background: var(--cream); color: var(--navy); line-height: 1.6; }
+
+        .result-details-bg-layer { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 10% 10%, rgba(13,27,64, 0.01) 0%, transparent 40%); }
+
+        .result-details-header { background: white; border-bottom: 1px solid var(--border); padding: 16px 40px; position: sticky; top: 0; z-index: 100; }
+
+        .result-details-nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; }
+
+        .result-details-logo { font-size: 1rem; font-weight: 800; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .result-details-logo span { color: var(--gold); }
+
+        .result-details-container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+        .result-details-result-hero { background: white; border-bottom: 1px solid var(--border); padding: 40px 0; }
+
+        .result-details-breadcrumb { display: flex; gap: 8px; font-size: 0.7rem; color: var(--muted); margin-bottom: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; flex-wrap: wrap; }
+        .result-details-breadcrumb a { color: var(--gold); text-decoration: none; }
+
+        .result-details-status-badge { display: inline-flex; align-items: center; gap: 6px; background: #EBFDF5; color: var(--success); padding: 4px 12px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-bottom: 16px; border: 1px solid rgba(16,185,129,0.1); }
+
+        .result-details-detail-title { font-size: 1.6rem; font-weight: 800; line-height: 1.4; color: var(--navy); margin-bottom: 10px; }
+
+        .result-details-detail-id { font-family: monospace; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+
+        .result-details-layout { display: grid; grid-template-columns: 1fr 360px; gap: 40px; padding: 40px 0; }
+
+        .result-details-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 24px; }
+
+        .result-details-sec-label { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; color: var(--gold); letter-spacing: 0.12em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .result-details-sec-label::after { content: ''; height: 1px; flex: 1; background: var(--border); }
+
+        .result-details-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+        .result-details-info-item { display: flex; flex-direction: column; gap: 4px; }
+
+        .result-details-info-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+
+        .result-details-info-val { font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+
+        .result-details-description-box { font-size: 0.9rem; color: var(--navy-mid); max-height: 300px; overflow-y: auto; padding-right: 15px; text-align: justify; padding-bottom: 10px; line-height: 1.6; }
+
+        .result-details-doc-link { display: flex; align-items: center; justify-content: space-between; padding: 12px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--navy); margin-top: 10px; transition: 0.2s; }
+        .result-details-doc-link:hover { border-color: var(--gold); background: var(--gold-dim); }
+
+        .result-details-doc-name { font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+
+        .result-details-sidebar { position: sticky; top: 100px; height: fit-content; }
+
+        .result-details-winner-card { background: var(--navy); color: white; border-radius: 20px; padding: 28px; position: relative; overflow: hidden; margin-bottom: 20px; }
+
+        .result-details-winner-tag { font-size: 0.6rem; font-weight: 900; background: var(--gold); color: white; padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 15px; }
+
+        .result-details-winner-name { font-size: 1.25rem; font-weight: 800; line-height: 1.3; margin-bottom: 15px; color: #fff; }
+
+        .result-details-award-stat { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px; }
+
+        .result-details-award-label { font-size: 0.65rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; display: block; }
+
+        .result-details-award-amount { font-size: 1.8rem; font-weight: 800; color: var(--gold); display: block; }
+
+        .result-details-btn-action { width: 100%; padding: 14px; border-radius: 10px; border: none; font-family: inherit; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; transition: 0.25s; text-decoration: none; }
+
+        .result-details-btn-gold { background: var(--gold); color: white; }
+
+        .result-details-btn-outline { background: white; border: 1px solid var(--border); color: var(--navy); }
+        .result-details-btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* TERMINAL THEME WITH result-details- PREFIX */
+
+.result-details-body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    margin: 0;
+}
+
+/* BLUR EFFECT AS REQUESTED */
+.result-details-blur {
+    filter: blur(4.5px);
+    user-select: none;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.result-details-header {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.result-details-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.result-details-btn-outline-small {
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.result-details-hero {
+    background: white;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.result-details-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.result-details-org-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.result-details-org-title h1 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin: 0;
+}
+
+.result-details-hero-socials {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.result-details-hero-socials i { cursor: pointer; color: #444; }
+
+.result-details-tag-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.result-details-category-tag {
+    background: #f1f5f9;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border: 1px solid var(--border);
+}
+
+.result-details-location {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.result-details-brief-box {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--navy-mid);
+    margin-bottom: 25px;
+}
+
+/* Metric Row */
+.result-details-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+}
+
+.result-details-metric-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+.result-details-metric-val {
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.result-details-val-gold { color: var(--navy); font-weight: 900; }
+
+/* Sticky Tabs */
+.result-details-tabs-nav {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 60px;
+    z-index: 999;
+}
+
+.result-details-tabs-flex {
+    display: flex;
+    gap: 40px;
+}
+
+.result-details-tab-item {
+    padding: 15px 0;
+    text-decoration: none;
+    color: var(--navy);
+    font-size: 0.85rem;
+    font-weight: 800;
+    border-bottom: 3px solid transparent;
+}
+
+.result-details-tab-item.active {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* Content Layout */
+.result-details-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 30px;
+    padding: 30px 0;
+}
+
+.result-details-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.result-details-section-header {
+    background: #f8fafc;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+}
+
+.result-details-section-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.result-details-overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+}
+
+.result-details-table-row {
+    background: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.result-details-table-row span { color: var(--muted); }
+
+.result-details-docs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+}
+
+.result-details-doc-item {
+    background: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.result-details-doc-item a { color: var(--navy); font-weight: 800; }
+
+.result-details-download-all {
+    display: block;
+    padding: 15px 20px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--navy);
+    text-decoration: underline;
+}
+
+/* Sidebar Specifics */
+.result-details-sidebar-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.result-details-sidebar-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+}
+
+.result-details-sidebar-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    margin-bottom: 15px;
+}
+
+.result-details-sidebar-table th {
+    text-align: left;
+    background: #f8fafc;
+    padding: 8px;
+    color: var(--muted);
+    font-weight: 800;
+    font-size: 0.65rem;
+}
+
+.result-details-sidebar-table td {
+    padding: 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--navy-mid);
+    font-weight: 600;
+}
+
+.result-details-sidebar-blue-btn {
+    width: 100%;
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.result-details-view-prev-btn {
+    width: 100%;
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.result-details-cat-interest {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.result-details-ad-banner {
+    background: #e2e8f0;
+    height: 100px;
+    border-radius: 4px;
+    position: relative;
+    padding: 20px;
+}
+
+.result-details-ad-tag {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: red;
+    color: white;
+    font-size: 0.5rem;
+    padding: 2px 4px;
+    font-weight: 900;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+    .result-details-layout-grid { grid-template-columns: 1fr; }
+    .result-details-metrics-row { grid-template-columns: 1fr 1fr; }
+}
+
+        /* SIGNUP PAGE STYLES */
+       
+
+        .signup-body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--cream);
+            color: var(--navy);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .signup-mesh-gradient {
+            position: fixed; inset: 0; z-index: -1; background: var(--cream); overflow: hidden;
+        }
+        .signup-mesh-gradient::before {
+            content: ''; position: absolute; width: 140%; height: 140%; top: -20%; left: -20%;
+            background-image: 
+                radial-gradient(circle at 15% 25%, rgba(13,27,64, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(212,160,23, 0.04) 0%, transparent 40%);
+            filter: blur(80px);
+        }
+
+        .signup-card {
+            width: 100%;
+            max-width: 650px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 20px 60px rgba(13,27,64,0.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        .signup-logo { 
+            font-size: 1.2rem; font-weight: 800; color: var(--navy); 
+            text-decoration: none; display: flex; align-items: center; 
+            justify-content: center; gap: 10px; margin-bottom: 24px;
+        }
+        .signup-logo span { color: var(--gold); }
+
+        .signup-header { text-align: center; margin-bottom: 40px; }
+        .signup-header h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+        .signup-header p { font-size: 0.9rem; color: var(--muted); }
+
+        /* Horizontal Form Layout */
+        .signup-form-group {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .signup-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy-mid);
+            text-align: right;
+        }
+
+        .signup-input, .signup-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: var(--navy);
+            background: var(--cream);
+            transition: 0.2s;
+            outline: none;
+        }
+
+        .signup-input:focus, .signup-textarea:focus {
+            border-color: var(--gold);
+            background: white;
+            box-shadow: 0 0 0 4px var(--gold-dim);
+        }
+
+        .signup-textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .signup-align-top {
+            align-items: flex-start;
+        }
+        .signup-align-top .signup-label {
+            padding-top: 12px;
+        }
+
+        .signup-keyword-wrapper {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .signup-note {
+            font-size: 0.85rem;
+            color: #111;
+            margin-bottom: 15px;
+            padding-left: 200px;
+        }
+
+        .signup-action-area {
+            padding-left: 200px;
+            margin-top: 30px;
+        }
+
+        .signup-btn-register {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .signup-btn-register:hover {
+            background: var(--navy-mid);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(13,27,64,0.15);
+        }
+
+        .signup-footer-text {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .signup-footer-text a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .signup-card {
+                padding: 30px;
+            }
+            .signup-form-group {
+                grid-template-columns: 140px 1fr;
+                gap: 15px;
+            }
+            .signup-note, .signup-action-area {
+                padding-left: 155px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .signup-body {
+                padding: 20px 15px;
+                align-items: flex-start;
+            }
+            .signup-card {
+                padding: 24px 20px;
+                border-radius: 20px;
+            }
+            .signup-form-group {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .signup-label {
+                text-align: left;
+            }
+            .signup-note, .signup-action-area {
+                padding-left: 0;
+            }
+            .signup-note {
+                font-size: 0.75rem;
+            }
+            .signup-btn-register {
+                width: 100%;
+            }
+            .signup-header h1 {
+                font-size: 1.3rem;
+            }
+        }
