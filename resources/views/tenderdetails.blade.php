@@ -1,6 +1,5 @@
 @extends('layouts.app')
  @section('content')   
-
     <div class="tender-details-bg-layer"></div>
     <main class="tender-details-main">
         <!-- Hero Section -->
@@ -35,21 +34,21 @@
                     <!-- Days Left Badge -->
                     <div class="tender-details-days-badge"> 
                         @if($data->submitdate >= date('Y-m-d'))
-                                @if($data->submitdate == date('Y-m-d'))
-                                    <span class="tender-details-days-text">Ending Today</span>
-                                @else
-                                    @php 
-                                    $fdate = date('Y-m-d');
-                                    $toDate = \Carbon\Carbon::parse($data->submitdate);
-                                    $fromDate = \Carbon\Carbon::parse($fdate);
-                                    $days = $fromDate->diffInDays($toDate);
-                                    @endphp 
-                                    <span class="tender-details-days-number">{{ $days }} </span>
-                                    <span class="tender-details-days-text">Days Left</span>
-                                @endif
+                            @if($data->submitdate == date('Y-m-d'))
+                                <span class="tender-details-days-text">Ending Today</span>
                             @else
-                                <span class="tender-details-days-text">Closed</span>
+                                @php 
+                                $fdate = date('Y-m-d');
+                                $toDate = \Carbon\Carbon::parse($data->submitdate);
+                                $fromDate = \Carbon\Carbon::parse($fdate);
+                                $days = $fromDate->diffInDays($toDate);
+                                @endphp 
+                                <span class="tender-details-days-number">{{ $days }} </span>
+                                <span class="tender-details-days-text">Days Left</span>
                             @endif
+                        @else
+                            <span class="tender-details-days-text">Closed</span>
+                        @endif
                     </div>
                 </div>
                 <!-- Financial Metrics Bar -->
@@ -150,7 +149,7 @@
                     </div>
                 </div>
             
-            @else
+             @else
                 <div class="tender-details-card-flat blur-section">
                     <div class="tender-details-card-header">
                         <span>Tender Documents</span>
@@ -175,7 +174,7 @@
                         Buy Now
                     </a>
                 </div>
-          @endif
+             @endif
           </div>
         </div>
         <form id="singlepayuRedirect" method="POST" action="{{ route('singlepayment.singlepayu') }}" style="display:none;">
