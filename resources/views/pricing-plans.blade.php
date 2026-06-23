@@ -270,7 +270,7 @@
                     <span class="pricing-plan-term">1 Year</span>
                     <div class="pricing-plan-cost">₹5,900</div>
                     <span class="pricing-plan-tax">(Incl. GST)</span>
-                    <a href="javascript:void(0)" onclick="payNow('Single State - 1 Yr', 1)" class="index-btn index-btn-login btn-pay">Pay Now</a>
+                    <a href="javascript:void(0)" onclick="payNow('Single State - 1 Yr', 5900)" class="index-btn index-btn-login btn-pay">Pay Now</a>
                 </div>
                 <div class="pricing-plan-price-col">
                     <span class="pricing-plan-term">2 Years</span>
