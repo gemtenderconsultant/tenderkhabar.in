@@ -79,7 +79,29 @@
 
         <div class="tender-details-container">
             <!-- Tender Overview Card -->
+             @if($isLoggedIn)
             <div class="tender-details-card-flat">
+                <div class="tender-details-card-header">
+                    <span>Tender Overview</span>
+                    <i data-lucide="chevron-up" size="16"></i>
+                </div>
+                <div class="tender-details-overview-grid">
+                    <div class="tender-details-grid-item"><span>TK ID -</span><strong>{{ $data->ourrefno }}</strong></div>
+                    <div class="tender-details-grid-item"><span>Organization Tender ID -</span><strong>{{ $data->TenderNo }}</strong></div>
+                    <div class="tender-details-grid-item"><span>Quantity -</span><a href="#">Click Here</a></div>
+                    <div class="tender-details-grid-item"><span>Website -</span><a href="#">Click Here</a></div>
+                    <div class="tender-details-grid-item"><span>Msme Exemption -</span><a href="#">Click Here</a></div>
+                    <div class="tender-details-grid-item"><span>Startup Exemption -</span><a href="#">Click Here</a></div>
+                    <div class="tender-details-grid-item"><span>Site Location -</span><strong>{{ $data->city ?? 'Refer Documents' }}, {{ $data->state_name ?? '' }}</strong></div>
+                    <div class="tender-details-grid-item"><span>Contact Person -</span><a href="#">Click Here</a></div>
+                    <div class="tender-details-grid-item"><span>Contact Address -</span><a href="#">Click Here</a></div>
+                    <div class="tender-details-grid-item"><span>Contact Number -</span><a href="#">Click Here</a></div>
+                    <div class="tender-details-grid-item"><span>Contact Email -</span><a href="#">Click Here</a></div>
+                    <div class="tender-details-grid-item"><span>Surety Bond -</span><a href="#">Click Here</a></div>
+                </div>
+            </div>
+            @else
+             <div class="tender-details-card-flat">
                 <div class="tender-details-card-header">
                     <span>Tender Overview</span>
                     <i data-lucide="chevron-up" size="16"></i>
@@ -99,6 +121,7 @@
                     <div class="tender-details-grid-item"><span>Surety Bond -</span><a href="#">Click Here</a></div>
                 </div>
             </div>
+            @endif
             <!-- Tender Documents Card -->
             <div class="position-relative">
              @if($checkdownload['is_download'] == 1)

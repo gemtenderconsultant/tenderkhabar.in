@@ -94,7 +94,7 @@ class SearchController extends Controller
                 ->where('is_download', 1)
                 ->exists();
         }
-
+$isLoggedIn = Auth::check();
         /* ✅ ANY ONE TRUE → ALLOW DOWNLOAD */
         $checkdownload['is_download'] = 0;
 
@@ -128,7 +128,7 @@ class SearchController extends Controller
         if(count($boq_items) > 0){
           $boq_items_count = DB::table('tenderinfo_items')->select(DB::raw('COUNT(*) as totalitem'),DB::raw('SUM(quantity) as totalqty'))->where('ourrefno',$ntid)->first();  
         }
-        return view('tenderdetails',compact('data','checkdownload','documentlink','tenderdocuments','corrigendumhistory','boq_items','boq_items_count'));
+        return view('tenderdetails',compact('data','checkdownload','documentlink','tenderdocuments','corrigendumhistory','boq_items','boq_items_count','isLoggedIn'));
     }
 
     public function backendgettenderslist(){
