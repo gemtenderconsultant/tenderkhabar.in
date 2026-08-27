@@ -93,33 +93,66 @@ do {
         if ($totaldate != $totalrecords) {
             log_message("Mismatch in record count. Updating database.", $log_file);
             foreach ($response['result'] as $key => $val) {
-                $ourrefno = $val['ourrefno'];
-                // The custom_real_escape_string function will now correctly use $dbh1
-                $TenderNo = custom_real_escape_string($val['TenderNo']);
-                $purfromdate = $val['purfromdate'];
-                $submitdate = $val['submitdate'];
-                $opendate = $val['opendate'];
-                $tenderamount = $val['tenderamount'];
-                $earnestamount = $val['earnestamount'];
-                $doccost = $val['doccost'];
-                $org_name = custom_real_escape_string($val['org_name']);
-                $agencyid = $val['agencyid'];
-                $address = custom_real_escape_string($val['address']);
-                $Work = custom_real_escape_string($val['Work']);
-                $state_name = $val['state_name'];
-                $stateid = $val['stateid'];
-                $city = $val['city'];
-                $dt = $val['dt'];
-                $documentpath = $val['documentpath'];
-                $tender_ref_id = custom_real_escape_string($val['tender_ref_id']);
-                $link2 = $val['link2'];
-                $tendertype = custom_real_escape_string($val['tendertype']);
-                $form_of_contract = custom_real_escape_string($val['form_of_contract']);
-                $pincode = $val['pincode'];
-                $countryid = $val['countryid'];
-                $type_2 = custom_real_escape_string($val['type_2']);
-                $link = custom_real_escape_string($val['link']);
-                // Check and insert/update live_tenders
+                    $tenderid = $val['tenderid'] ?? null;
+                    $sourcetenderid = custom_real_escape_string(
+                        $val['sourcetenderid'] ?? ''
+                    );
+                    $tenderamount = $val['value'] ?? 0;
+                    $biddeadline = $val['biddeadline'] ?? null;
+                    $earnestamount = $val['emd'] ?? 0;
+                    $doccost = $val['documentcost'] ?? 0;
+                    $org_name = custom_real_escape_string(
+                        $val['authority'] ?? ''
+                    );
+                    $currency = $val['currency'] ?? null;
+                    $tenderdetails = custom_real_escape_string(
+                        $val['tenderdetails'] ?? ''
+                    );
+                    $tenderdescription = custom_real_escape_string(
+                        $val['tenderdescription'] ?? ''
+                    );
+                    $prebidmeetingdate = $val['prebidmeetingdate'] ?? null;
+                    $datecreated = $val['datecreated'] ?? null;
+                    $corrigenduminfo = $val['corrigenduminfo'];
+                    $sector = $val['sector'];
+                    $sourceurl = $val['sourceurl'] ?? '';
+                    $subindustry = $val['subindustry'] ?? '';
+                     $completionofwork = $val['completionofwork'] ?? '';
+                     $ai_summary = $val['ai_summary'] ?? '';
+
+                    $location = $val['location'][0] ?? [];
+                    $country = $location['country'] ?? '';
+                    $state = $location['state'] ?? '';
+                    $city = $location['city'] ?? '';
+                    // These IDs are not available in JSON
+                    $stateid = null;
+                    $countryid = null;
+                    $pincode = null;
+                    // Address is not available directly
+                    $address = '';
+                    // my code end
+                    $dt = $val['datecreated'] ?? null;
+                    $document = $val['documents'][0] ?? [];
+                    $documentpath = $document['downloadLink'] ?? '';
+                    $tender_ref_id = custom_real_escape_string(
+                        $val['sourcetenderid'] ?? ''
+                    );
+                    $link2 = $val['sourceurl'] ?? '';
+                    $link = $val['sourceurl'] ?? '';
+                    $tendertype = '';
+                    $form_of_contract = '';
+                    $type_2 = '';
+                    $state_name = custom_real_escape_string($state_name);
+                    $city = custom_real_escape_string($city);
+                    $address = custom_real_escape_string($address);
+                    $tendertype = custom_real_escape_string($tendertype);
+                    $form_of_contract = custom_real_escape_string($form_of_contract);
+                    $type_2 = custom_real_escape_string($type_2);
+                    $link = custom_real_escape_string($link);
+                    $link2 = custom_real_escape_string($link2);
+                    $documentpath = custom_real_escape_string($documentpath);
+
+                        // Check and insert/update live_tenders
                 $sqlcheck = "SELECT ourrefno FROM `live_tenders` WHERE ourrefno='$ourrefno'";
                 $querycheck = mysqli_query($dbh1, $sqlcheck); // UPDATED to use $dbh1
                 if ($querycheck === false) {
