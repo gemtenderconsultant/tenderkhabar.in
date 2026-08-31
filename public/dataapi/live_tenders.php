@@ -84,7 +84,6 @@ do {
                     log_message("MySQL Error: " . mysqli_error($dbh1), $log_file); // UPDATED to use $dbh1
                     die("Error: Failed to query database. Check the log for details.");
                 }
-
                 $rowtotal = mysqli_fetch_assoc($queryalllivecount);
                 $totaldate = $rowtotal['totaldate'];
                 log_message("Total records in database for date $date: $totaldate", $log_file);
@@ -153,7 +152,7 @@ do {
                     $documentpath = custom_real_escape_string($documentpath);
 
                         // Check and insert/update live_tenders
-                $sqlcheck = "SELECT ourrefno FROM `live_tenders` WHERE ourrefno='$ourrefno'";
+                $sqlcheck = "SELECT id FROM `tenders247_data_2026` WHERE ourrefno='$ourrefno'";
                 $querycheck = mysqli_query($dbh1, $sqlcheck); // UPDATED to use $dbh1
                 if ($querycheck === false) {
                     log_message("MySQL Error (live_tenders insert): " . mysqli_error($dbh1), $log_file); // UPDATED to use $dbh1
