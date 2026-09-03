@@ -150,7 +150,6 @@ do {
                     $link = custom_real_escape_string($link);
                     $link2 = custom_real_escape_string($link2);
                     $documentpath = custom_real_escape_string($documentpath);
-
                         // Check and insert/update live_tenders
                 $sqlcheck = "SELECT id FROM `tenders247_data_2026` WHERE ourrefno='$ourrefno'";
                 $querycheck = mysqli_query($dbh1, $sqlcheck); // UPDATED to use $dbh1
