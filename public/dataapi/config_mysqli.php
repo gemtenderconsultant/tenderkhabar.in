@@ -6,7 +6,6 @@ ini_set('max_execution_time',6000000000000);
 ini_set('max_input_time',6000000000000);
 ini_set('memory_limit', '512M');
 
-
 $dbh1 = mysqli_connect("localhost", "tenderkhabar_admin", "Dummy@007", "tenderkhabar_prod");
 // Check connection
 if (!$dbh1) {
