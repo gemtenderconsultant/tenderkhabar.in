@@ -92,170 +92,145 @@ do {
         if ($totaldate != $totalrecords) {
             log_message("Mismatch in record count. Updating database.", $log_file);
             foreach ($response['result'] as $key => $val) {
+                                        
                     $tenderid = $val['tenderid'] ?? null;
-                    $sourcetenderid = custom_real_escape_string(
-                        $val['sourcetenderid'] ?? ''
-                    );
-                    $tenderamount = $val['value'] ?? 0;
+                    $sourcetenderid = custom_real_escape_string($val['sourcetenderid'] ?? '');
+                    $value = $val['value'] ?? 0;
                     $biddeadline = $val['biddeadline'] ?? null;
-                    $earnestamount = $val['emd'] ?? 0;
-                    $doccost = $val['documentcost'] ?? 0;
-                    $org_name = custom_real_escape_string(
-                        $val['authority'] ?? ''
-                    );
+                    $emd = $val['emd'] ?? 0;//authority
+                    $documentcost = $val['documentcost'] ?? 0;//currency
+                    $authority = custom_real_escape_string($val['authority'] ?? ''); //tenderdetails
                     $currency = $val['currency'] ?? null;
-                    $tenderdetails = custom_real_escape_string(
-                        $val['tenderdetails'] ?? ''
-                    );
-                    $tenderdescription = custom_real_escape_string(
-                        $val['tenderdescription'] ?? ''
-                    );
+                    $tenderdetails = custom_real_escape_string($val['tenderdetails'] ?? '');
+                    $tenderdescription = custom_real_escape_string($val['tenderdescription'] ?? '');
                     $prebidmeetingdate = $val['prebidmeetingdate'] ?? null;
                     $datecreated = $val['datecreated'] ?? null;
                     $corrigenduminfo = $val['corrigenduminfo'];
                     $sector = $val['sector'];
-                    $sourceurl = $val['sourceurl'] ?? '';
                     $subindustry = $val['subindustry'] ?? '';
-                     $completionofwork = $val['completionofwork'] ?? '';
-                     $ai_summary = $val['ai_summary'] ?? '';
-
+                    $sourceurl = $val['sourceurl'] ?? '';
+                    
+                    $completionofwork = $val['completionofwork'] ?? '';
+                    $ai_summary = $val['ai_summary'] ?? '';
                     $location = $val['location'][0] ?? [];
-                    $country = $location['country'] ?? '';
-                    $state = $location['state'] ?? '';
                     $city = $location['city'] ?? '';
-                    // These IDs are not available in JSON
-                    $stateid = null;
-                    $countryid = null;
-                    $pincode = null;
-                    // Address is not available directly
-                    $address = '';
-                    // my code end
-                    $dt = $val['datecreated'] ?? null;
-                    $document = $val['documents'][0] ?? [];
+                    $cityid = null;//city id
+                    $state = $location['state'] ?? '';
+                    $stateid = null;//state id
+                    $country = $location['country'] ?? '';
+                    $countryid = null;//country id
+                    $documents = $val['documents'][0] ?? [];
                     $documentpath = $document['downloadLink'] ?? '';
-                    $tender_ref_id = custom_real_escape_string(
-                        $val['sourcetenderid'] ?? ''
-                    );
-                    $link2 = $val['sourceurl'] ?? '';
-                    $link = $val['sourceurl'] ?? '';
-                    $tendertype = '';
-                    $form_of_contract = '';
-                    $type_2 = '';
-                    $state_name = custom_real_escape_string($state_name);
-                    $city = custom_real_escape_string($city);
-                    $address = custom_real_escape_string($address);
-                    $tendertype = custom_real_escape_string($tendertype);
-                    $form_of_contract = custom_real_escape_string($form_of_contract);
-                    $type_2 = custom_real_escape_string($type_2);
-                    $link = custom_real_escape_string($link);
-                    $link2 = custom_real_escape_string($link2);
-                    $documentpath = custom_real_escape_string($documentpath);
-                        // Check and insert/update live_tenders
-                $sqlcheck = "SELECT id FROM `tenders247_data_2026` WHERE ourrefno='$ourrefno'";
+                    $zipdocumentdownload = $val['zipdocumentdownload'] ?? '';
+                    $dt = $val['datecreated'] ?? null;
+                    // Check and insert/update live_tenders
+                $sqlcheck = "SELECT id FROM `tenders247_data_2026` WHERE tenderid='$tenderid'";
                 $querycheck = mysqli_query($dbh1, $sqlcheck); // UPDATED to use $dbh1
                 if ($querycheck === false) {
                     log_message("MySQL Error (live_tenders insert): " . mysqli_error($dbh1), $log_file); // UPDATED to use $dbh1
                 } else {
-                    log_message("count into live_tenders: $ourrefno", $log_file);
+                    log_message("count into live_tenders: $tenderid", $log_file);
                 }
                 if (mysqli_num_rows($querycheck) == 0) {
-                    $sqlinsert = "INSERT INTO `live_tenders` (`ourrefno`, `TenderNo`, `purfromdate`, `submitdate`, `opendate`, `tenderamount`, `earnestamount`, `doccost`, `org_name`, `agencyid`, `address`, `city`, `pincode`, `Work`, `countryid`, `state_name`, `stateid`, `dt`, `documentpath`, `tender_ref_id`, `link2`, `is_corro`, `tender_catgeory1`, `tender_catgeory2`, `link`, `form_of_contract`, `item`) VALUES 
-                        ('$ourrefno','$TenderNo','$purfromdate','$submitdate','$opendate','$tenderamount','$earnestamount','$doccost','$org_name','$agencyid','$address','$city','$pincode','$Work','$countryid','$state_name','$stateid','$dt','$documentpath','$tender_ref_id','$link2','0','$tendertype','$type_2','$link','$form_of_contract','')";
+                    $sqlinsert = "INSERT INTO `live_tenders` (`tenderid`, `sourcetenderid`, `value`, `biddeadline`, `emd`, `documentcost`, `authority`, `currency`, `tenderdetails`, `tenderdescription`, `prebidmeetingdate`, `datecreated`, `corrigenduminfo`, `sector`, `subindustry`, `sourceurl`, `completionofwork`, `ai_summary`, `location`, `city`, `cityid`, `state`, `stateid`, `country`, `countryid`, `documents`, `documentpath`,`zipdocumentdownload`) VALUES 
+                        ('$tenderid','$sourcetenderid','$value','$biddeadline','$emd','$documentcost','$authority','$currency','$tenderdetails','$tenderdescription','$prebidmeetingdate','$datecreated','$corrigenduminfo','$sector','$subindustry','$sourceurl','$completionofwork','$ai_summary','$location','$city','$cityid','$state','$stateid','$country','$countryid','$documents','$documentpath','$zipdocumentdownload')";
                     $insert = mysqli_query($dbh1, $sqlinsert); // UPDATED to use $dbh1
                     if ($insert === false) {
                         log_message("MySQL Error (live_tenders): " . mysqli_error($dbh1), $log_file); // UPDATED to use $dbh1
                     } else {
-                        log_message("Inserted new record into live_tenders: $ourrefno", $log_file);
+                        log_message("Inserted new record into live_tenders: $tenderid", $log_file);
                     }
                 } else {
                     $sqlupdate = "UPDATE `live_tenders` SET 
-                    `TenderNo` = '$TenderNo',
-                    `purfromdate` = '$purfromdate',
-                    `submitdate` = '$submitdate',
-                    `opendate` = '$opendate',
-                    `tenderamount` = '$tenderamount',
-                    `earnestamount` = '$earnestamount',
-                    `doccost` = '$doccost',
-                    `org_name` = '$org_name',
-                    `agencyid` = '$agencyid',
-                    `address` = '$address',
+                    `sourcetenderid` = '$sourcetenderid',
+                    `value` = '$value',
+                    `biddeadline` = '$biddeadline',
+                    `emd` = '$emd',
+                    `documentcost` = '$documentcost',
+                    `authority` = '$authority',
+                    `currency` = '$currency',
+                    `tenderdetails` = '$tenderdetails',
+                    `tenderdescription` = '$tenderdescription',
+                    `prebidmeetingdate` = '$prebidmeetingdate',
+                    `datecreated` = '$datecreated',
+                    `corrigenduminfo` = '$corrigenduminfo',
+                    `sector` = '$sector',
+                    `subindustry` = '$subindustry',
+                    `sourceurl` = '$sourceurl',
+                    `completionofwork` = '$completionofwork',
+                    `ai_summary` = '$ai_summary',
+                    `location` = '$location',
                     `city` = '$city',
-                    `pincode` = '$pincode',
-                    `Work` = '$Work',
-                    `countryid` = '$countryid',
-                    `state_name` = '$state_name',
+                    `cityid` = '$cityid',
+                    `state` = '$state',
                     `stateid` = '$stateid',
-                    `dt` = '$dt',
+                    `country` = '$country',
+                    `countryid` = '$countryid',
+                    `documents` = '$documents',
                     `documentpath` = '$documentpath',
-                    `tender_ref_id` = '$tender_ref_id',
-                    `link2` = '$link2',
-                    `is_corro` = '0',
-                    `tender_catgeory1` = '$tendertype',
-                    `tender_catgeory2` = '$type_2',
-                    `link` = '$link',
-                    `form_of_contract` = '$form_of_contract',
-                    `item` = ''
-                    WHERE `ourrefno` = '$ourrefno'";
+                    `zipdocumentdownload` = '$zipdocumentdownload'
+                    WHERE `tenderid` = '$tenderid'";
                     $update = mysqli_query($dbh1, $sqlupdate);
                     if ($update === false) {
                         log_message("MySQL Error (live_tenders update): " . mysqli_error($dbh1), $log_file); // UPDATED to use $dbh1
                     } else {
-                        log_message("Inserted new record into live_tenders: $ourrefno", $log_file);
+                        log_message("Inserted new record into live_tenders: $tenderid", $log_file);
                     }
                 }
 
                 // Check and insert/update tenderinfo_2017
-                $sqlcheck2 = "SELECT ourrefno FROM `tenderinfo_2017` WHERE ourrefno='$ourrefno'";
+                $sqlcheck2 = "SELECT tenderid FROM `tenderinfo_2017` WHERE tenderid='$tenderid'";
                 $querycheck2 = mysqli_query($dbh1, $sqlcheck2); // UPDATED to use $dbh1
                 if ($querycheck2 === false) {
                     log_message("MySQL Error (tenderinfo_2017): " . mysqli_error($dbh1), $log_file); // UPDATED to use $dbh1
                 } else {
-                    log_message("count into tenderinfo_2017: $ourrefno", $log_file);
+                    log_message("count into tenderinfo_2017: $tenderid", $log_file);
                 }
                 if (mysqli_num_rows($querycheck2) == 0) {
-                    $sqlinsert2 = "INSERT INTO `tenderinfo_2017` (`ourrefno`, `TenderNo`, `purfromdate`, `submitdate`, `opendate`, `tenderamount`, `earnestamount`, `doccost`, `org_name`, `agencyid`, `address`, `city`, `pincode`, `Work`, `countryid`, `state_name`, `stateid`, `dt`, `documentpath`, `tender_ref_id`, `link2`, `is_corro`, `tender_catgeory1`, `tender_catgeory2`, `link`, `form_of_contract`, `item`) VALUES 
-                                    ('$ourrefno','$TenderNo','$purfromdate','$submitdate','$opendate','$tenderamount','$earnestamount','$doccost','$org_name','$agencyid','$address','$city','$pincode','$Work','$countryid','$state_name','$stateid','$dt','$documentpath','$tender_ref_id','$link2','0','$tendertype','$type_2','$link','$form_of_contract','')";
+                    $sqlinsert2 = "INSERT INTO `tenderinfo_2017` (`tenderid`, `sourcetenderid`, `value`, `biddeadline`, `emd`, `documentcost`, `authority`, `currency`, `tenderdetails`, `tenderdescription`, `prebidmeetingdate`, `city`, `pincode`, `sector`, `subindustry`, `sourceurl`, `completionofwork`, `ai_summary`, `location`, `city`, `cityid`, `state`, `stateid`, `country`, `countryid`, `documents`, `documentpath`) VALUES 
+                                    ('$tenderid','$sourcetenderid','$value','$biddeadline','$emd','$documentcost','$authority','$currency','$tenderdetails','$tenderdescription','$prebidmeetingdate','$city','$pincode','$sector','$subindustry','$sourceurl','$completionofwork','$ai_summary','$location','$city','$cityid','$state','$stateid','$country','$countryid','$documents','$documentpath')";
                     $insert2 = mysqli_query($dbh1, $sqlinsert2); // UPDATED to use $dbh1
                     if ($insert2 === false) {
                         log_message("MySQL Error (tenderinfo_2017 insert): " . mysqli_error($dbh1), $log_file); // UPDATED to use $dbh1
                     } else {
-                        log_message("Inserted new record into tenderinfo_2017: $ourrefno", $log_file);
+                        log_message("Inserted new record into tenderinfo_2017: $tenderid", $log_file);
                     }
                 } else {
                     $sqlupdate2 = "UPDATE `tenderinfo_2017` SET 
-                        `TenderNo` = '$TenderNo',
-                        `purfromdate` = '$purfromdate',
-                        `submitdate` = '$submitdate',
-                        `opendate` = '$opendate',
-                        `tenderamount` = '$tenderamount',
-                        `earnestamount` = '$earnestamount',
-                        `doccost` = '$doccost',
-                        `org_name` = '$org_name',
-                        `agencyid` = '$agencyid',
-                        `address` = '$address',
+                        `sourcetenderid` = '$sourcetenderid',
+                        `value` = '$value',
+                        `biddeadline` = '$biddeadline',
+                        `emd` = '$emd',
+                        `documentcost` = '$documentcost',
+                        `authority` = '$authority',
+                        `currency` = '$currency',
+                        `tenderdetails` = '$tenderdetails',
+                        `tenderdescription` = '$tenderdescription',
+                        `prebidmeetingdate` = '$prebidmeetingdate',
                         `city` = '$city',
                         `pincode` = '$pincode',
-                        `Work` = '$Work',
-                        `countryid` = '$countryid',
-                        `state_name` = '$state_name',
+                        `sector` = '$sector',
+                        `subindustry` = '$subindustry',
+                        `sourceurl` = '$sourceurl',
+                        `completionofwork` = '$completionofwork',
+                        `ai_summary` = '$ai_summary',
+                        `location` = '$location',
+                        `city` = '$city',
+                        `cityid` = '$cityid',
+                        `state` = '$state',
                         `stateid` = '$stateid',
-                        `dt` = '$dt',
+                        `country` = '$country',
+                        `countryid` = '$countryid',
+                        `documents` = '$documents',
                         `documentpath` = '$documentpath',
-                        `tender_ref_id` = '$tender_ref_id',
-                        `link2` = '$link2',
-                        `is_corro` = '0',
-                        `tender_catgeory1` = '$tendertype',
-                        `tender_catgeory2` = '$type_2',
-                        `link` = '$link',
-                        `form_of_contract` = '$form_of_contract',
-                        `item` = ''
-                        WHERE `ourrefno` = '$ourrefno'";
+                        `zipdocumentdownload` = '$zipdocumentdownload'
+                        WHERE `tenderid` = '$tenderid'";
 
                     $update2 = mysqli_query($dbh1, $sqlupdate2);
                     if ($update === false) {
                         log_message("MySQL Error (tenderinfo_2017 update): " . mysqli_error($dbh1), $log_file); // UPDATED to use $dbh1
                     } else {
-                        log_message("Inserted new record into tenderinfo_2017: $ourrefno", $log_file);
+                        log_message("Inserted new record into tenderinfo_2017: $tenderid", $log_file);
                     }
                 }
             }
